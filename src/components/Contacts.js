@@ -26,9 +26,15 @@ class Contacts extends Component {
   }
   render(){
     return(
-      <>
-      friends
-      </>
+      <div>
+        {this.state.friends.map((frnd, index) => {
+          return(
+            <div key={index}>
+              <p>{frnd.username}</p>
+            </div>
+          )
+        })}
+      </div>
     )
   }
 }
