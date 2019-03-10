@@ -10,7 +10,7 @@ class Nav extends Component {
           <NavLink to="/otherusers">Find Users</NavLink>
           <Switch>
             <Route exact path='/otherusers' render={
-              ()=> <FindUsers />}/>
+              ()=> <FindUsers currentUser={this.props.currentUser}/>}/>
           </Switch>
         </div>
       </BrowserRouter>

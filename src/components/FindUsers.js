@@ -25,6 +25,28 @@ class FindUsers extends Component {
     })
   }
 
+  addToContacts = (data) => {
+    const friend = data
+    friend.user_id = this.props.currentUser.data.id
+
+    fetch('http://localhost:3000/users/contacts',{
+      method:'POST',
+      body:JSON.stringify(friend),
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+      },(err) => {
+        console.log(err);
+      })
+    })
+  }
+
 
   render(){
     return(
@@ -36,7 +58,18 @@ class FindUsers extends Component {
         />
         <input type="submit"/>
       </form>
-
+      {this.state.users? <span>
+          {this.state.users.info.map((user,index) => {
+            return(
+              <span key={index}>
+                <p>{user.username}
+                <button onClick={()=>this.addToContacts(user)}
+                >Add to Contacts</button>
+                </p>
+              </span>
+            )
+          })}
+        </span>:""}
       </>
     )
   }

@@ -46,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <div className="">
-      {this.state.logedin? <Nav />:
+      {this.state.logedin? <Nav currentUser={this.state.currentUser}/>:
         <div>
         <SignUp />
         <Login getUser={this.getUser} logedin={this.toggleLogdin} />
