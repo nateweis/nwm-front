@@ -19,8 +19,10 @@ class Login extends Component {
       method:'POST',
       body:JSON.stringify(this.state),
       headers:{
+         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     })
     .then((res) => {
       res.json()

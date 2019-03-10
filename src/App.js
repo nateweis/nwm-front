@@ -22,7 +22,11 @@ class App extends Component {
   }
 
   getUser = () => {
-    fetch('http://localhost:3000/sessions')
+    console.log("running");
+    fetch('http://localhost:3000/sessions',{
+      method:'GET',
+      credentials: 'include'
+    })
     .then((res) => {
       res.json()
       .then((data) => {
