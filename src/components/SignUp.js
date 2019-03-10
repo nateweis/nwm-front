@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class Login extends Component {
+class SignUp extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -15,7 +15,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/sessions',{
+    fetch('http://localhost:3000/users',{
       method:'POST',
       body:JSON.stringify(this.state),
       headers:{
@@ -30,8 +30,6 @@ class Login extends Component {
           username:'',
           password:''
         })
-        this.props.logedin()
-        this.props.getUser()
       },(err) => {
         console.log(err);
       })
@@ -42,7 +40,7 @@ class Login extends Component {
     return(
       <>
       <form onSubmit={this.handleSubmit}>
-        Login:
+        Sign Up:
         <input type="text" placeholder="username"
         value={this.state.username} name="username"
         onChange={this.handleChange}/>
@@ -56,4 +54,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default SignUp

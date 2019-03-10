@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client'
+import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Nav from './components/Nav'
 
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-     logedin: false
+     logedin: false,
+     currentUser:{}
     }
   }
   socket = io.connect('http://localhost:3000');
 
+  toggleLogdin = () => {
+    this.setState((pre) => {
+      pre.logedin = !pre.logedin
+      return{logedin:pre.logedin}
+    })
+  }
 
+  getUser = () => {
+    fetch('http://localhost:3000/sessions')
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.setState({currentUser:data})
+      },(err) => {
+        console.log(err);
+      })
+    })
+  }
 
   componentDidMount(){
 
@@ -21,7 +42,12 @@ class App extends Component {
   render() {
     return (
       <div className="">
-        <Login />
+      {this.state.logedin? <Nav />:
+        <div>
+        <SignUp />
+        <Login getUser={this.getUser} logedin={this.toggleLogdin} />
+        </div>
+      }
       </div>
     );
   }
