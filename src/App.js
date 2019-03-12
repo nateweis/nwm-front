@@ -14,6 +14,10 @@ class App extends Component {
   }
   socket = io.connect('http://localhost:3000');
 
+  changeRoom = (chat) => {
+    this.socket.emit('room',chat)
+  }
+
   toggleLogdin = () => {
     this.setState((pre) => {
       pre.logedin = !pre.logedin
@@ -75,6 +79,7 @@ class App extends Component {
     return (
       <div className="">
       {this.state.logedin? <Nav getContacts={this.getContacts}
+      changeRoom={this.changeRoom}
         friends={this.state.friends} chats={this.state.chats}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>
