@@ -45,10 +45,24 @@ class App extends Component {
       res.json()
       .then((data) => {
         this.setState({friends:data})
+        this.getChats()
       })
       .catch((err) => {
         console.log(err);
       })
+    })
+  }
+
+  getChats = () => {
+    fetch('http://localhost:3000/chats/'+ this.state.currentUser.id)
+    .then((res) => {
+        res.json()
+        .then((data) => {
+          this.setState({chats:data})
+        },(err) => {
+          console.log(err);
+          console.log("somthing wrong in getting the chats for user on frontend");
+        })
     })
   }
 
@@ -61,7 +75,7 @@ class App extends Component {
     return (
       <div className="">
       {this.state.logedin? <Nav getContacts={this.getContacts}
-      friends={this.state.friends}
+        friends={this.state.friends} chats={this.state.chats}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>
         <SignUp />
