@@ -8,6 +8,36 @@ class NewChat extends Component {
     }
   }
 
+  handleChange =(e) => {
+    this.setState({name:e.target.value})
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const obj = {
+      name: this.state.name,
+      user_id: this.props.id
+    }
+    fetch('http://localhost:3000/chats',{
+      method:'POST',
+      body:JSON.stringify(obj),
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.setState({name:''})
+      },(err) => {
+        console.log(err);
+        console.log("theres an error in the create new chat front end");
+      })
+    })
+  }
+
   componentDidMount(){
     this.props.getContacts()
   }
@@ -15,13 +45,15 @@ class NewChat extends Component {
   render(){
     return(
       <>
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <input
         type="text"
         placeholder="chat name"
         value={this.state.name}
         name="name"
+        onChange={this.handleChange}
         />
+        <input type="submit" value="Add Chat"/>
       </form>
       </>
     )

@@ -29,21 +29,10 @@ class Nav extends Component {
     })
   }
 
-  getContacts = () => {
-    fetch('http://localhost:3000/users/contacts/'+ this.props.currentUser.id)
-    .then((res) => {
-      res.json()
-      .then((data) => {
-        this.setState({friends:data})
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    })
-  }
+
 
   componentDidMount(){
-    this.getContacts()
+    this.props.getContacts()
   }
 
   render(){
@@ -60,14 +49,15 @@ class Nav extends Component {
 
             <Route exact path='/contacts'
             render={()=> <Contacts
-              getContacts={this.getContacts}
-              friends={this.state.friends}
+              getContacts={this.props.getContacts}
+              friends={this.props.friends}
             />}/>
 
             <Route exact path='/newchat' render={() =>
               <NewChat
-              getContacts={this.getContacts}
-              friends={this.state.friends}
+              getContacts={this.props.getContacts}
+              friends={this.props.friends}
+              id={this.props.currentUser.id}
               />
             }/>
           </Switch>

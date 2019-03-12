@@ -32,7 +32,21 @@ class App extends Component {
       .then((data) => {
         console.log(data);
         this.setState({currentUser:data})
+        this.getContacts()
       },(err) => {
+        console.log(err);
+      })
+    })
+  }
+
+  getContacts = () => {
+    fetch('http://localhost:3000/users/contacts/'+ this.state.currentUser.id)
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        this.setState({friends:data})
+      })
+      .catch((err) => {
         console.log(err);
       })
     })
@@ -46,7 +60,9 @@ class App extends Component {
   render() {
     return (
       <div className="">
-      {this.state.logedin? <Nav logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
+      {this.state.logedin? <Nav getContacts={this.getContacts}
+      friends={this.state.friends}
+        logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>
         <SignUp />
         <Login getUser={this.getUser} logedin={this.toggleLogdin} />
