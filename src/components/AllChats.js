@@ -12,7 +12,7 @@ class AllChats extends Component {
 
 
   changeChat = (chat) => {
-    this.props.changeRoom(chat.chat)
+    this.props.changeRoom(chat)
     this.setState((pre) => {
       return{
         room: chat

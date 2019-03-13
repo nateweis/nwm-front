@@ -16,7 +16,12 @@ class App extends Component {
   socket = io.connect('http://localhost:3000');
 
   changeRoom = (chat) => {
-    this.socket.emit('room',chat)
+    // enter room
+    this.socket.emit('room',chat.chat)
+    // update user room info
+    this.updateCurrentRoom(chat)
+    // repopulate chat page apon entering a room
+    this.getChatInfo()
   }
 
   newMessage = (msg) => {
@@ -74,6 +79,43 @@ class App extends Component {
           console.log(err);
           console.log("somthing wrong in getting the chats for user on frontend");
         })
+    })
+  }
+
+  getChatInfo = () => {
+    // fethch the chats info based on the room you are in
+    const room = this.state.currentUser.current_room
+    fetch('http://localhost:3000/messages/'+ room)
+    .then((res) => {
+      // populate the message state with the info
+      res.json()
+      .then((data) => {
+        this.setState({messages:data})
+      },(err) => {
+        console.log(err);
+        console.log("error with getting chat info on load");
+      })
+    })
+  }
+
+  updateCurrentRoom = (chat) => {
+    fetch('http://localhost:3000/users/changeRoom',{
+      method:'PUT',
+      body:JSON.stringify(chat),
+      headers:{
+         'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.getUser()
+      },(err) => {
+        console.log("didnt go through in changeRoom frontend");
+      })
     })
   }
 
