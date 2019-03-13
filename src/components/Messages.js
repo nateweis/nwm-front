@@ -22,14 +22,15 @@ class Messages extends Component {
     if(this.state.friendName.indexOf(friend.username) === -1){
       this.setState({
         friendName:[friend.username,...this.state.friendName],
-        friendId:[friend.id, ...this.state.friendId]
+        friendId:[friend.contact_id, ...this.state.friendId]
       })
     }
 
   }
 
   handleSubmit = () => {
-
+      console.log(this.state.chat.chat_id);
+      console.log(this.state.friendId);
 
 
     this.setState({

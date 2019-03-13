@@ -26,8 +26,10 @@ class FindUsers extends Component {
   }
 
   addToContacts = (data) => {
+    console.log(data);
     const friend = data
     friend.user_id = this.props.currentUser.id
+    friend.contact_id = data.id
 
     fetch('http://localhost:3000/users/contacts',{
       method:'POST',
