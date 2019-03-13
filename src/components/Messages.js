@@ -5,7 +5,8 @@ class Messages extends Component {
     super(props)
     this.state = {
       friendName:[],
-      friendId:[]
+      friendId:[],
+      newMsg:''
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -50,12 +51,21 @@ class Messages extends Component {
         })
       })
 
-
     this.setState({
       form:false,
       friendName:[],
       friendId:[]
     })
+  }
+
+  handleChange = (e) => {
+    this.setState({newMsg:e.target.value})
+  }
+
+  submit = (e) => {
+    e.preventDefault()
+    this.props.socket(this.state.newMsg)
+    this.setState({newMsg:''})
   }
 
   render(){
@@ -64,7 +74,7 @@ class Messages extends Component {
         <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
         {this.state.chat? this.state.chat.admin? <button onClick={this.addFriends}>Add Friends to the Chat</button>:"" :""}
         {this.state.form? <div>
-            <div>
+            <div className="addFriend">
             {this.props.friends.map((friend,index) => {
               return(
                 <span key={index}>
@@ -74,7 +84,7 @@ class Messages extends Component {
               )
             })}
             </div>
-            <div>
+            <div className="addedFriend">
               <button onClick={this.handleSubmit}>Submit</button>
               {this.state.friendName.map((friend,index) => {
                 return(
@@ -84,8 +94,29 @@ class Messages extends Component {
                 )
               })}
             </div>
+
           </div>
         :""}
+
+        <div className="messages">
+          {this.props.messages.map((message, index) => {
+            return(
+              <div key={index}>
+              {message}
+              </div>
+            )
+          })}
+          <form onSubmit={this.submit}>
+            <input
+              type="text"
+              value={this.state.newMsg}
+              placeholder="New Message"
+              onChange={this.handleChange}
+            />
+            <input type='submit'/>
+          </form>
+        </div>
+
       </div>
     )
   }

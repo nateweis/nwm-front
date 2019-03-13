@@ -41,7 +41,11 @@ class AllChats extends Component {
             </span>
           )
         }): "Loading....."}
-        <Messages friends={this.props.friends} chat={this.state.room}/>
+        <Messages
+        friends={this.props.friends} 
+        chat={this.state.room}
+        messages={this.props.messages}
+        socket={this.props.socket}/>
       </div>
     )
   }

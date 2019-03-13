@@ -9,13 +9,18 @@ class App extends Component {
     super(props)
     this.state = {
      logedin: false,
-     currentUser:{}
+     currentUser:{},
+     messages:[]
     }
   }
   socket = io.connect('http://localhost:3000');
 
   changeRoom = (chat) => {
     this.socket.emit('room',chat)
+  }
+
+  newMessage = (msg) => {
+    this.socket.emit('message',msg)
   }
 
   toggleLogdin = () => {
@@ -75,7 +80,9 @@ class App extends Component {
 
 
   componentDidMount(){
-
+    this.socket.on('chat',(msg) => {
+      this.setState({messages:[msg,...this.state.messages]})
+    })
   }
 
 
@@ -85,6 +92,7 @@ class App extends Component {
       {this.state.logedin? <Nav getContacts={this.getContacts}
       changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
+        messages={this.state.messages} socket={this.newMessage}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>
         <SignUp />
