@@ -64,7 +64,13 @@ class Messages extends Component {
 
   submit = (e) => {
     e.preventDefault()
-    this.props.socket(this.state.newMsg)
+    const obj = {
+      msg:this.state.newMsg,
+      sender:this.props.currentUser.username,
+      chat_id: this.state.chat.chat_id,
+      user_id: this.props.currentUser.id
+    }
+    this.props.socket(obj)
     this.setState({newMsg:''})
   }
 
@@ -102,7 +108,7 @@ class Messages extends Component {
           {this.props.messages.map((message, index) => {
             return(
               <div key={index}>
-              {message}
+              <strong>{message.sender}</strong> : {message.message}
               </div>
             )
           })}
