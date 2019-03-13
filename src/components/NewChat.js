@@ -18,7 +18,7 @@ class NewChat extends Component {
       name: this.state.name,
       user_id: this.props.id
     }
-    fetch('http://localhost:3000/chats',{
+    fetch('https://nwm-backend.herokuapp.com/chats',{
       method:'POST',
       body:JSON.stringify(obj),
       headers:{

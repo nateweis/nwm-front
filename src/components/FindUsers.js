@@ -14,7 +14,7 @@ class FindUsers extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/users/'+ this.state.username)
+    fetch('https://nwm-backend.herokuapp.com/users/'+ this.state.username)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -31,7 +31,7 @@ class FindUsers extends Component {
     friend.user_id = this.props.currentUser.id
     friend.contact_id = data.id
 
-    fetch('http://localhost:3000/users/contacts',{
+    fetch('https://nwm-backend.herokuapp.com/users/contacts',{
       method:'POST',
       body:JSON.stringify(friend),
       headers:{

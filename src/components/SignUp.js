@@ -15,7 +15,7 @@ class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/users',{
+    fetch('https://nwm-backend.herokuapp.com/users',{
       method:'POST',
       body:JSON.stringify(this.state),
       headers:{

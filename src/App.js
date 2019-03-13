@@ -13,7 +13,7 @@ class App extends Component {
      messages:[]
     }
   }
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://nwm-backend.herokuapp.com');
 
   changeRoom = (chat) => {
     this.socket.emit('room',chat)
@@ -32,7 +32,7 @@ class App extends Component {
 
   getUser = () => {
     console.log("running");
-    fetch('http://localhost:3000/sessions',{
+    fetch('https://nwm-backend.herokuapp.com//sessions',{
       method:'GET',
       credentials: 'include'
     })
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   getContacts = () => {
-    fetch('http://localhost:3000/users/contacts/'+ this.state.currentUser.id)
+    fetch('https://nwm-backend.herokuapp.com/users/contacts/'+ this.state.currentUser.id)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -63,7 +63,7 @@ class App extends Component {
   }
 
   getChats = () => {
-    fetch('http://localhost:3000/chats/'+ this.state.currentUser.id)
+    fetch('https://nwm-backend.herokuapp.com/chats/'+ this.state.currentUser.id)
     .then((res) => {
         res.json()
         .then((data) => {

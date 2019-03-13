@@ -14,7 +14,7 @@ class Nav extends Component {
  }
 
   logout = () => {
-    fetch('http://localhost:3000/sessions',{
+    fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'DELETE',
       credentials: 'include'
     })
@@ -69,7 +69,7 @@ class Nav extends Component {
 
           </Switch>
           <AllChats
-            messages={this.props.messages} 
+            messages={this.props.messages}
             socket={this.props.socket}
             friends={this.props.friends}
             chats={this.props.chats}
