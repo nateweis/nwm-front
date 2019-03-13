@@ -29,8 +29,26 @@ class Messages extends Component {
   }
 
   handleSubmit = () => {
-      console.log(this.state.chat.chat_id);
-      console.log(this.state.friendId);
+      const obj = {
+        userArr: this.state.friendId,
+        chat_id: this.state.chat.chat_id
+      }
+      fetch('http://localhost:3000/chats/many',{
+        method:'POST',
+        body:JSON.stringify(obj),
+        headers:{
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+      .then((res) => {
+        res.json()
+        .then((data) => {
+          console.log(data);
+        },(err) => {
+          console.log(err);
+        })
+      })
 
 
     this.setState({
