@@ -31,6 +31,7 @@ class NewChat extends Component {
       .then((data) => {
         console.log(data);
         this.setState({name:''})
+        this.props.getChats()
       },(err) => {
         console.log(err);
         console.log("theres an error in the create new chat front end");

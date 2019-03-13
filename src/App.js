@@ -62,13 +62,17 @@ class App extends Component {
     .then((res) => {
         res.json()
         .then((data) => {
-          this.setState({chats:data})
+          this.setState(() => {
+            return{chats:data}
+          })
         },(err) => {
           console.log(err);
           console.log("somthing wrong in getting the chats for user on frontend");
         })
     })
   }
+
+
 
   componentDidMount(){
 
@@ -79,7 +83,7 @@ class App extends Component {
     return (
       <div className="">
       {this.state.logedin? <Nav getContacts={this.getContacts}
-      changeRoom={this.changeRoom}
+      changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>

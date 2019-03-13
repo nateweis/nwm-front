@@ -43,8 +43,9 @@ class Nav extends Component {
           <NavLink to="/otherusers"> Find Users </NavLink>
           <NavLink to="/contacts"> Contacts </NavLink>
           <NavLink to="/newchat"> New Chat </NavLink>
-          <NavLink to="/chatlist"> Chat List </NavLink>
+
           <span onClick={this.logout}> Logout </span>
+
           <Switch>
             <Route exact path='/otherusers' render={
               ()=> <FindUsers currentUser={this.props.currentUser}/>}/>
@@ -57,21 +58,21 @@ class Nav extends Component {
 
             <Route exact path='/newchat' render={() =>
               <NewChat
+              getChats={this.props.getChats}
               getContacts={this.props.getContacts}
               friends={this.props.friends}
               id={this.props.currentUser.id}
               />
             }/>
 
-            <Route exact path="/chatlist" render={() =>
-              <AllChats
-                chats={this.props.chats}
-                getContacts={this.props.getContacts}
-                changeRoom={this.props.changeRoom}
-               />
-            }/>
+
 
           </Switch>
+          <AllChats
+            chats={this.props.chats}
+            getContacts={this.props.getContacts}
+            changeRoom={this.props.changeRoom}
+           />
         </div>
       </BrowserRouter>
     )
