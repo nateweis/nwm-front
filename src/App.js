@@ -10,18 +10,23 @@ class App extends Component {
     this.state = {
      logedin: false,
      currentUser:{},
-     messages:[]
+     messages:[],
+     leave:''
     }
   }
   socket = io.connect('http://localhost:3000');
 
   changeRoom = (chat) => {
-    // enter room
+    // leave old room
+    this.socket.emit('leave', this.state.leave)
+    // enter new room
     this.socket.emit('room',chat.chat)
     // update user room info
     this.updateCurrentRoom(chat)
     // repopulate chat page apon entering a room
     this.getChatInfo()
+    // reset the next room that will be left
+    this.setState({leave:chat.chat})
   }
 
   newMessage = (msg) => {

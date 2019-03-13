@@ -22,7 +22,18 @@ class AllChats extends Component {
 
   static getDerivedStateFromProps(props, state){
     if(!state.chats || state.chats.length !== props.chats.length){
-      return{chats: props.chats}
+
+      // let room = {}
+      // for (let target of props.chats) {
+      //   if(target.current_room === target.chat_id){
+      //     room = target
+      //   }
+      // }
+
+      return{
+        chats: props.chats
+        // room: room
+      }
     }
   }
 
