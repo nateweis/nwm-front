@@ -69,6 +69,7 @@ class Nav extends Component {
 
           </Switch>
           <AllChats
+            friends={this.props.friends}
             chats={this.props.chats}
             getContacts={this.props.getContacts}
             changeRoom={this.props.changeRoom}

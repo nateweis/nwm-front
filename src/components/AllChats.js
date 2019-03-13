@@ -37,11 +37,11 @@ class AllChats extends Component {
         {this.state.chats? this.state.chats.map((chat,index) => {
           return(
             <span key={index}>
-            <a onClick={()=>this.changeChat(chat)}>{chat.chat}</a>
+            <a onClick={()=>this.changeChat(chat)}>{chat.chat}</a><br/>
             </span>
           )
         }): "Loading....."}
-        <Messages chat={this.state.room}/>
+        <Messages friends={this.props.friends} chat={this.state.room}/>
       </div>
     )
   }
