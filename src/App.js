@@ -14,7 +14,7 @@ class App extends Component {
      leave:''
     }
   }
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://nwm-backend.herokuapp.com/');
 
   changeRoom = (chat) => {
     // leave old room
@@ -42,7 +42,7 @@ class App extends Component {
 
   getUser = () => {
     console.log("running");
-    fetch('http://localhost:3000/sessions',{
+    fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'GET',
       credentials: 'include'
     })
@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   getContacts = () => {
-    fetch('http://localhost:3000/users/contacts/'+ this.state.currentUser.id)
+    fetch('https://nwm-backend.herokuapp.com/users/contacts/'+ this.state.currentUser.id)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -73,7 +73,7 @@ class App extends Component {
   }
 
   getChats = () => {
-    fetch('http://localhost:3000/chats/'+ this.state.currentUser.id)
+    fetch('https://nwm-backend.herokuapp.com/chats/'+ this.state.currentUser.id)
     .then((res) => {
         res.json()
         .then((data) => {
@@ -90,7 +90,7 @@ class App extends Component {
   getChatInfo = () => {
     // fethch the chats info based on the room you are in
     const room = this.state.currentUser.current_room
-    fetch('http://localhost:3000/messages/'+ room)
+    fetch('https://nwm-backend.herokuapp.com/messages/'+ room)
     .then((res) => {
       // populate the message state with the info
       res.json()
@@ -104,7 +104,7 @@ class App extends Component {
   }
 
   updateCurrentRoom = (chat) => {
-    fetch('http://localhost:3000/users/changeRoom',{
+    fetch('https://nwm-backend.herokuapp.com/users/changeRoom',{
       method:'PUT',
       body:JSON.stringify(chat),
       headers:{

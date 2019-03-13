@@ -6,7 +6,8 @@ class Messages extends Component {
     this.state = {
       friendName:[],
       friendId:[],
-      newMsg:''
+      newMsg:'',
+      options:false
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -64,8 +65,33 @@ class Messages extends Component {
 
   submit = (e) => {
     e.preventDefault()
-    this.props.socket(this.state.newMsg)
+    const obj = {
+      msg:this.state.newMsg,
+      sender:this.props.currentUser.username,
+      chat_id: this.state.chat.chat_id,
+      user_id: this.props.currentUser.id
+    }
+    this.props.socket(obj)
     this.setState({newMsg:''})
+  }
+
+  closeForm = () => {
+    this.setState({
+      form:false,
+      friendName:[],
+      friendId:[]
+    })
+  }
+
+  pop = (index) => {
+    this.setState((pre) => {
+      pre.friendName.splice(index,1)
+      pre.friendId.splice(index,1)
+      return{
+        friendName: pre.friendName,
+        friendId: pre.friendId
+      }
+    })
   }
 
   render(){
@@ -79,6 +105,7 @@ class Messages extends Component {
               return(
                 <span key={index}>
                 {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                <span onClick={this.closeForm}>X</span>
                 <br/>
                 </span>
               )
@@ -89,7 +116,7 @@ class Messages extends Component {
               {this.state.friendName.map((friend,index) => {
                 return(
                   <span key={index}>
-                  {friend} <br/>
+                  {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
                   </span>
                 )
               })}
@@ -102,7 +129,9 @@ class Messages extends Component {
           {this.props.messages.map((message, index) => {
             return(
               <div key={index}>
-              {message}
+              <strong>
+              {message.sender === this.props.currentUser.username? "You" : message.sender}
+              </strong> : {message.message}
               </div>
             )
           })}

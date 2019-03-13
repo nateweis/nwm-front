@@ -69,6 +69,7 @@ class Nav extends Component {
 
           </Switch>
           <AllChats
+            currentUser={this.props.currentUser}
             messages={this.props.messages}
             socket={this.props.socket}
             friends={this.props.friends}
