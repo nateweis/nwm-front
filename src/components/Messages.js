@@ -6,7 +6,8 @@ class Messages extends Component {
     this.state = {
       friendName:[],
       friendId:[],
-      newMsg:''
+      newMsg:'',
+      options:false
     }
   }
   static getDerivedStateFromProps(props, state){
