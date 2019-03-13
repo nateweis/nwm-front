@@ -10,13 +10,23 @@ class App extends Component {
     this.state = {
      logedin: false,
      currentUser:{},
-     messages:[]
+     messages:[],
+     leave:''
     }
   }
-  socket = io.connect('https://nwm-backend.herokuapp.com');
+  socket = io.connect('http://localhost:3000');
 
   changeRoom = (chat) => {
-    this.socket.emit('room',chat)
+    // leave old room
+    this.socket.emit('leave', this.state.leave)
+    // enter new room
+    this.socket.emit('room',chat.chat)
+    // update user room info
+    this.updateCurrentRoom(chat)
+    // repopulate chat page apon entering a room
+    this.getChatInfo()
+    // reset the next room that will be left
+    this.setState({leave:chat.chat})
   }
 
   newMessage = (msg) => {
@@ -32,7 +42,7 @@ class App extends Component {
 
   getUser = () => {
     console.log("running");
-    fetch('https://nwm-backend.herokuapp.com//sessions',{
+    fetch('http://localhost:3000/sessions',{
       method:'GET',
       credentials: 'include'
     })
@@ -49,7 +59,7 @@ class App extends Component {
   }
 
   getContacts = () => {
-    fetch('https://nwm-backend.herokuapp.com/users/contacts/'+ this.state.currentUser.id)
+    fetch('http://localhost:3000/users/contacts/'+ this.state.currentUser.id)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -63,7 +73,7 @@ class App extends Component {
   }
 
   getChats = () => {
-    fetch('https://nwm-backend.herokuapp.com/chats/'+ this.state.currentUser.id)
+    fetch('http://localhost:3000/chats/'+ this.state.currentUser.id)
     .then((res) => {
         res.json()
         .then((data) => {
@@ -74,6 +84,43 @@ class App extends Component {
           console.log(err);
           console.log("somthing wrong in getting the chats for user on frontend");
         })
+    })
+  }
+
+  getChatInfo = () => {
+    // fethch the chats info based on the room you are in
+    const room = this.state.currentUser.current_room
+    fetch('http://localhost:3000/messages/'+ room)
+    .then((res) => {
+      // populate the message state with the info
+      res.json()
+      .then((data) => {
+        this.setState({messages:data})
+      },(err) => {
+        console.log(err);
+        console.log("error with getting chat info on load");
+      })
+    })
+  }
+
+  updateCurrentRoom = (chat) => {
+    fetch('http://localhost:3000/users/changeRoom',{
+      method:'PUT',
+      body:JSON.stringify(chat),
+      headers:{
+         'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.getUser()
+      },(err) => {
+        console.log("didnt go through in changeRoom frontend");
+      })
     })
   }
 
