@@ -74,6 +74,25 @@ class Messages extends Component {
     this.setState({newMsg:''})
   }
 
+  closeForm = () => {
+    this.setState({
+      form:false,
+      friendName:[],
+      friendId:[]
+    })
+  }
+
+  pop = (index) => {
+    this.setState((pre) => {
+      pre.friendName.splice(index,1)
+      pre.friendId.splice(index,1)
+      return{
+        friendName: pre.friendName,
+        friendId: pre.friendId
+      }
+    })
+  }
+
   render(){
     return(
       <div>
@@ -85,6 +104,7 @@ class Messages extends Component {
               return(
                 <span key={index}>
                 {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                <span onClick={this.closeForm}>X</span>
                 <br/>
                 </span>
               )
@@ -95,7 +115,7 @@ class Messages extends Component {
               {this.state.friendName.map((friend,index) => {
                 return(
                   <span key={index}>
-                  {friend} <br/>
+                  {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
                   </span>
                 )
               })}
@@ -108,7 +128,9 @@ class Messages extends Component {
           {this.props.messages.map((message, index) => {
             return(
               <div key={index}>
-              <strong>{message.sender}</strong> : {message.message}
+              <strong>
+              {message.sender === this.props.currentUser.username? "You" : message.sender}
+              </strong> : {message.message}
               </div>
             )
           })}
