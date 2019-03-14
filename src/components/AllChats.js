@@ -9,7 +9,14 @@ class AllChats extends Component {
     }
   }
 
-
+  makePrivateRoom = (friend) => {
+    const uniqeRoom = {
+      chat:(friend + this.props.currentUser.id) + "",
+      id: this.props.currentUser.id,
+      chat_id: 0 - (friend + this.props.currentUser.id)
+    }
+    this.changeChat(uniqeRoom)
+  }
 
   changeChat = (chat) => {
     this.props.changeRoom(chat)
@@ -48,16 +55,27 @@ class AllChats extends Component {
         {this.state.chats? this.state.chats.map((chat,index) => {
           return(
             <span key={index}>
-            <p onClick={()=>this.changeChat(chat)}>{chat.chat}</p>
+            <li onClick={()=>this.changeChat(chat)}>{chat.chat}</li>
             </span>
           )
         }): "Loading....."}
+
+        <h2>Private Message</h2>
+        {this.props.friends? this.props.friends.map((friend,index) => {
+          return(
+            <span key={index}>
+              <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
+            </span>
+          )
+        }): "Loading....."}
+
         <Messages
         currentUser={this.props.currentUser}
         friends={this.props.friends}
         chat={this.state.room}
         messages={this.props.messages}
         socket={this.props.socket}/>
+
       </div>
     )
   }
