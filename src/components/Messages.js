@@ -100,12 +100,24 @@ class Messages extends Component {
     })
   }
 
+  // as admin completely end the chat for everyone
+  nukeChat = () => {
+    const id = this.state.chat.id
+    console.log(id);
+  }
+
+  // as admin, rename the chat
+  chatRename = () => {
+    console.log("hi");
+  }
+
   // addmins open/close their chat options
   optionMenu = () => {
     this.setState((pre) => {
       pre.options = !pre.options
       return{options:pre.options}
     })
+    this.closeForm()
   }
 
   render(){
@@ -113,7 +125,11 @@ class Messages extends Component {
       <div>
         <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
         {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
-        {this.state.chat? this.state.options? <button onClick={this.addFriends}>Add Friends to the Chat</button> :"" :""}
+        {this.state.chat? this.state.options? <div>
+            <button onClick={this.addFriends}>Add Friends to the Chat</button>
+            <button onClick={this.chatRename}>Rename Chat</button>
+            <button onClick={this.nukeChat}>Remove Chat</button>
+          </div> :"" :""}
         {this.state.form? <div>
             <div className="addFriend">
             {this.props.friends.map((friend,index) => {

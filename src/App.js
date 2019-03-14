@@ -51,7 +51,7 @@ class App extends Component {
         console.log(data);
         this.setState({currentUser:data})
         this.getContacts()
-        this.toggleLogdin()
+        this.setState({logedin:true})
       },(err) => {
         console.log(err);
       })
