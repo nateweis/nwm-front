@@ -127,6 +127,10 @@ class App extends Component {
 
 
   componentDidMount(){
+    this.getUser()
+    // if(this.state.currentUser.id){
+    //
+    // }
     this.socket.on('chat',(msg) => {
       this.setState({messages:[msg,...this.state.messages]})
     })

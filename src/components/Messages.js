@@ -16,10 +16,12 @@ class Messages extends Component {
     }
   }
 
+  // opens the form for adding ppl to the chat
   addFriends = () => {
     this.setState({form:true})
   }
 
+  // putts the friends in a list ready to send over to be added to the chat
   addList = (friend) => {
     if(this.state.friendName.indexOf(friend.username) === -1){
       this.setState({
@@ -30,6 +32,7 @@ class Messages extends Component {
 
   }
 
+  // Submits the list to the database
   handleSubmit = () => {
       const obj = {
         userArr: this.state.friendId,
@@ -59,10 +62,11 @@ class Messages extends Component {
     })
   }
 
+  // typing in the message box
   handleChange = (e) => {
     this.setState({newMsg:e.target.value})
   }
-
+  // submitting the message to the chat
   submit = (e) => {
     e.preventDefault()
     const obj = {
@@ -75,6 +79,7 @@ class Messages extends Component {
     this.setState({newMsg:''})
   }
 
+  // closes the add friend form without adding anyone
   closeForm = () => {
     this.setState({
       form:false,
@@ -83,6 +88,7 @@ class Messages extends Component {
     })
   }
 
+  // removes the friend from the q of ppl being added to the chat
   pop = (index) => {
     this.setState((pre) => {
       pre.friendName.splice(index,1)
@@ -94,11 +100,20 @@ class Messages extends Component {
     })
   }
 
+  // addmins open/close their chat options
+  optionMenu = () => {
+    this.setState((pre) => {
+      pre.options = !pre.options
+      return{options:pre.options}
+    })
+  }
+
   render(){
     return(
       <div>
         <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
-        {this.state.chat? this.state.chat.admin? <button onClick={this.addFriends}>Add Friends to the Chat</button>:"" :""}
+        {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
+        {this.state.chat? this.state.options? <button onClick={this.addFriends}>Add Friends to the Chat</button> :"" :""}
         {this.state.form? <div>
             <div className="addFriend">
             {this.props.friends.map((friend,index) => {
