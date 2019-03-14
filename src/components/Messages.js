@@ -100,10 +100,34 @@ class Messages extends Component {
     })
   }
 
+  // warning pop up before removing a chat
+  warning = () => {
+    this.setState({warning:true})
+  }
+  cancelNuke = () => {
+    this.setState({warning:false})
+  }
+
   // as admin completely end the chat for everyone
   nukeChat = () => {
-    const id = this.state.chat.id
-    console.log(id);
+    const id = this.state.chat.chat_id
+    fetch('http://localhost:3000/chats/'+id,{
+      method: 'DELETE',
+      headers:{
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+      },(err) => {
+        console.log(err);
+        console.log("couldnt get delete data");
+      })
+    })
+    this.cancelNuke()
   }
 
   // as admin, rename the chat
@@ -123,13 +147,21 @@ class Messages extends Component {
   render(){
     return(
       <div>
+      {/*==================================================
+                    The header and option buttons
+        ==================================================*/}
         <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
         {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
         {this.state.chat? this.state.options? <div>
             <button onClick={this.addFriends}>Add Friends to the Chat</button>
             <button onClick={this.chatRename}>Rename Chat</button>
-            <button onClick={this.nukeChat}>Remove Chat</button>
+            <button onClick={this.warning}>Remove Chat</button>
           </div> :"" :""}
+
+          {/*==================================================
+                  The from to add friends to the chatroom
+            ==================================================*/}
+
         {this.state.form? <div>
             <div className="addFriend">
             {this.props.friends.map((friend,index) => {
@@ -156,6 +188,10 @@ class Messages extends Component {
           </div>
         :""}
 
+        {/*==================================================
+                      The actual chat messages
+          ==================================================*/}
+
         <div className="messages">
           {this.props.messages.map((message, index) => {
             return(
@@ -166,6 +202,11 @@ class Messages extends Component {
               </div>
             )
           })}
+
+          {/*==================================================
+                    The form to add a new message
+            ==================================================*/}
+
           <form onSubmit={this.submit}>
             <input
               type="text"
@@ -176,6 +217,16 @@ class Messages extends Component {
             <input type='submit'/>
           </form>
         </div>
+
+        {/*==================================================
+      A modual that pops up to give warning before deleting a chat
+          ==================================================*/}
+
+        {this.state.warning? <div className="warning-model">
+            <p>Are you sure you want to delete
+            {this.state.chat.chat} chat room?</p>
+            <button onClick={this.cancelNuke}>No</button> <button onClick={this.nukeChat}>Yes</button>
+          </div>:""}
 
       </div>
     )
