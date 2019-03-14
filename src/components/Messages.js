@@ -7,7 +7,8 @@ class Messages extends Component {
       friendName:[],
       friendId:[],
       newMsg:'',
-      options:false
+      options:false,
+      newName:''
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -132,7 +133,42 @@ class Messages extends Component {
 
   // as admin, rename the chat
   chatRename = () => {
-    console.log("hi");
+    this.setState({
+      chatRename:true,
+      newName: this.state.chat.chat
+    })
+  }
+
+  handleRenameChange = (e) => {
+    this.setState({newName:e.target.value})
+  }
+
+  // sumits the new chat name
+  submitNewName = (e) => {
+    e.preventDefault()
+    // sends the info to backend
+    const obj = {
+      id: this.state.chat.chat_id,
+      chat: this.state.newName
+    }
+    fetch('http://localhost:3000/chats',{
+      method:'PUT',
+      body:JSON.stringify(obj),
+      headers:{
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+      },(err) => {
+        console.log(err);
+      })
+    })
+
+    this.setState({chatRename:false})
   }
 
   // addmins open/close their chat options
@@ -227,6 +263,20 @@ class Messages extends Component {
             {this.state.chat.chat} chat room?</p>
             <button onClick={this.cancelNuke}>No</button> <button onClick={this.nukeChat}>Yes</button>
           </div>:""}
+
+          {/*==================================================
+                  A modual that for renaming the chat
+            ==================================================*/}
+          {this.state.chatRename? <div className='rename-chat'>
+              <h4>Rename Chat</h4>
+              <form onSubmit={this.submitNewName}>
+                <input type='text'
+                  value={this.state.newName}
+                  onChange={this.handleRenameChange}
+                />
+                <input type="submit"/>
+              </form>
+            </div> :''}
 
       </div>
     )
