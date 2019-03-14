@@ -21,7 +21,8 @@ class SignUp extends Component {
       headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json, text/plain, */*'
-      }
+      },
+      mode:'no-cors'
     })
     .then((res) => {
       res.json()
