@@ -19,7 +19,8 @@ class SignUp extends Component {
       method:'POST',
       body:JSON.stringify(this.state),
       headers:{
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*'
       }
     })
     .then((res) => {
