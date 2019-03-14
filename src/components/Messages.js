@@ -187,6 +187,36 @@ class Messages extends Component {
     })
   }
 
+  // kick guy out of chat
+  kickOutOfChat = (member,index) => {
+    const obj = {
+      user:member,
+      chat:this.state.chat.chat_id
+    }
+    fetch('http://localhost:3000/chats/remove/member',{
+      method:'DELETE',
+      body:JSON.stringify(obj),
+      headers:{
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.setState((pre) => {
+          pre.participants.splice(index,1)
+          return{participants:pre.participants}
+        })
+      },(err) => {
+        console.log(err);
+        console.log("couldnt remove person from chat frontend");
+      })
+    })
+
+  }
+
   // addmins open/close their chat options
   optionMenu = () => {
     this.setState((pre) => {
@@ -219,7 +249,7 @@ class Messages extends Component {
                 <div key={index}>
                   <li>{member.username}
                   {this.state.chat.admin? member.id !== this.props.currentUser.id?
-                    <button>Kick From Chat</button> : "":""}
+                    <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
                   </li>
                 </div>
               )
