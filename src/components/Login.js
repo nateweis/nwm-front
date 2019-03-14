@@ -32,13 +32,14 @@ class Login extends Component {
           username:'',
           password:''
         })
-        this.props.logedin()
+        
         this.props.getUser()
       },(err) => {
         console.log(err);
       })
     })
   }
+
 
   render(){
     return(

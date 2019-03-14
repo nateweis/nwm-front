@@ -41,7 +41,6 @@ class App extends Component {
   }
 
   getUser = () => {
-    console.log("running");
     fetch('http://localhost:3000/sessions',{
       method:'GET',
       credentials: 'include'
@@ -52,6 +51,7 @@ class App extends Component {
         console.log(data);
         this.setState({currentUser:data})
         this.getContacts()
+        this.toggleLogdin()
       },(err) => {
         console.log(err);
       })
@@ -128,9 +128,6 @@ class App extends Component {
 
   componentDidMount(){
     this.getUser()
-    // if(this.state.currentUser.id){
-    //
-    // }
     this.socket.on('chat',(msg) => {
       this.setState({messages:[msg,...this.state.messages]})
     })
@@ -147,7 +144,7 @@ class App extends Component {
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
         <div>
         <SignUp />
-        <Login getUser={this.getUser} logedin={this.toggleLogdin} />
+        <Login getUser={this.getUser} />
         </div>
       }
       </div>
