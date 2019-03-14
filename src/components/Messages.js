@@ -345,19 +345,21 @@ class Messages extends Component {
           ==================================================*/}
 
         <div className="messages">
-          {this.props.messages.map((message, index) => {
+          {this.props.messages.filter( str => str.chat_id === this.props.currentUser.current_room ).map((message, index) => {
             return(
-              <div key={index}>
-              <strong>
-              {message.user_id === this.props.currentUser.id? "You" : message.sender}
-              </strong> : {message.message}
 
-              {message.user_id === this.props.currentUser.id? <span>
-              <button onClick={()=>this.editOneMessage(message)}>Edit</button>
-               <button onClick={()=>this.removeOneMessage(message)}>Remove</button>
-               </span>:''}
+                <div key={index}>
+                <strong>
+                {message.user_id === this.props.currentUser.id? "You" : message.sender}
+                </strong> : {message.message}
 
-              </div>
+                {message.user_id === this.props.currentUser.id? <span>
+                <button onClick={()=>this.editOneMessage(message)}>Edit</button>
+                 <button onClick={()=>this.removeOneMessage(message)}>Remove</button>
+                 </span>:''}
+
+                </div>
+
             )
           })}
 

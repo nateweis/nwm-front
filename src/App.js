@@ -90,7 +90,7 @@ class App extends Component {
   getChatInfo = () => {
     // fethch the chats info based on the room you are in
     const room = this.state.currentUser.current_room
-    fetch('http://localhost:3000/messages/'+ room)
+    fetch('http://localhost:3000/messages')
     .then((res) => {
       // populate the message state with the info
       res.json()

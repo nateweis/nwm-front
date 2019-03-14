@@ -30,18 +30,20 @@ class AllChats extends Component {
   static getDerivedStateFromProps(props, state){
     if(!state.chats || state.chats.length !== props.chats.length){
 
-      // let room = {}
-      // for (let target of props.chats) {
-      //   if(target.current_room === target.chat_id){
-      //     room = target
-      //   }
-      // }
+      let room = {}
+      if(props.chats){
+        for (let target of props.chats) {
+          if(target.current_room === target.chat_id){
+            room = target
+          }
+        }
+      }
 
       return{
-        chats: props.chats
-        // room: room
+        chats: props.chats,
+        room: room
       }
-    }
+    }else{return null}
   }
 
   componentDidMount(){
