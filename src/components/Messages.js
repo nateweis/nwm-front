@@ -8,7 +8,8 @@ class Messages extends Component {
       friendId:[],
       newMsg:'',
       options:false,
-      newName:''
+      newName:'',
+      participants:[]
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -171,6 +172,21 @@ class Messages extends Component {
     this.setState({chatRename:false})
   }
 
+  // get the chat participants
+  getChatParticipants = () => {
+    const id = this.state.chat.chat_id
+    fetch('http://localhost:3000/chats/members/'+id)
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        this.setState({participants:data})
+      },(err) => {
+        console.log(err);
+        console.log("getting chatroom members has frontend problems");
+      })
+    })
+  }
+
   // addmins open/close their chat options
   optionMenu = () => {
     this.setState((pre) => {
@@ -178,6 +194,7 @@ class Messages extends Component {
       return{options:pre.options}
     })
     this.closeForm()
+    this.getChatParticipants()
   }
 
   render(){
@@ -187,11 +204,23 @@ class Messages extends Component {
                     The header and option buttons
         ==================================================*/}
         <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
+        {/* option button for now just for admin need to make for everyone*/}
         {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
         {this.state.chat? this.state.options? <div>
+          {/* add frinds to chat (just for admin) */}
             <button onClick={this.addFriends}>Add Friends to the Chat</button>
+            {/* rename/delte chat (just for admin) */}
             <button onClick={this.chatRename}>Rename Chat</button>
             <button onClick={this.warning}>Remove Chat</button>
+            {/* shows group members (4everyone) */}
+            <h4>Participants in "{this.state.chat.chat}" Room</h4>
+            {this.state.participants.map((member, index) => {
+              return(
+                <div key={index}>
+                  <li>{member.username}</li>
+                </div>
+              )
+            })}
           </div> :"" :""}
 
           {/*==================================================
