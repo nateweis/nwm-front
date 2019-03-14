@@ -9,7 +9,8 @@ class Messages extends Component {
       newMsg:'',
       options:false,
       newName:'',
-      participants:[]
+      participants:[],
+      edit:''
     }
   }
   static getDerivedStateFromProps(props, state){
@@ -217,6 +218,59 @@ class Messages extends Component {
 
   }
 
+  // user can edit any of there messages
+  editOneMessage = (message) => {
+    this.setState({
+      editMessage:true,
+      edit: message.message,
+      msgId: message.id
+    })
+  }
+
+  handleMessageEdit = (e) => {
+    this.setState({edit:e.target.value})
+  }
+
+  editMessageSubmit = (e) => {
+    e.preventDefault()
+
+    const obj = {edit:this.state.edit}
+    fetch('http://localhost:3000/messages/'+ this.state.msgId,{
+      method:'PUT',
+      body:JSON.stringify(obj),
+      headers:{
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'},
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+      },(err) => {
+        console.log("edit message no go on front");
+      })
+    })
+
+    this.setState({editMessage:false})
+  }
+
+  // user can delete their own messages
+  removeOneMessage = (msg) => {
+    fetch('http://localhost:3000/messages/'+ msg.id,{
+      method:'DELETE',
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+      },(err) => {
+        console.log("prob on front deleting message");
+      })
+    })
+  }
+
   // addmins open/close their chat options
   optionMenu = () => {
     this.setState((pre) => {
@@ -295,8 +349,14 @@ class Messages extends Component {
             return(
               <div key={index}>
               <strong>
-              {message.sender === this.props.currentUser.username? "You" : message.sender}
+              {message.user_id === this.props.currentUser.id? "You" : message.sender}
               </strong> : {message.message}
+
+              {message.user_id === this.props.currentUser.id? <span>
+              <button onClick={()=>this.editOneMessage(message)}>Edit</button>
+               <button onClick={()=>this.removeOneMessage(message)}>Remove</button>
+               </span>:''}
+
               </div>
             )
           })}
@@ -327,7 +387,7 @@ class Messages extends Component {
           </div>:""}
 
           {/*==================================================
-                  A modual that for renaming the chat
+                      A modual for renaming the chat
             ==================================================*/}
           {this.state.chatRename? <div className='rename-chat'>
               <h4>Rename Chat</h4>
@@ -339,6 +399,20 @@ class Messages extends Component {
                 <input type="submit"/>
               </form>
             </div> :''}
+
+          {/*==================================================
+                  A modual for editing your message
+            ==================================================*/}
+          {this.state.editMessage?
+              <form onSubmit={this.editMessageSubmit}>
+                <input
+                  type="text"
+                  value={this.state.edit}
+                  onChange={this.handleMessageEdit}
+                />
+                <input type="submit"/>
+              </form>
+          :''}
 
       </div>
     )
