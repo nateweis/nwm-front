@@ -217,7 +217,10 @@ class Messages extends Component {
             {this.state.participants.map((member, index) => {
               return(
                 <div key={index}>
-                  <li>{member.username}</li>
+                  <li>{member.username}
+                  {this.state.chat.admin? member.id !== this.props.currentUser.id?
+                    <button>Kick From Chat</button> : "":""}
+                  </li>
                 </div>
               )
             })}
