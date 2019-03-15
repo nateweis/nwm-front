@@ -169,7 +169,7 @@ class Messages extends Component {
     .then((res) => {
       res.json()
       .then((data) => {
-        console.log(data);
+        this.props.editChat('chats', this.props.chatIndex, data.data)
       },(err) => {
         console.log(err);
       })
