@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Messages from './Messages'
+import FindUsers from './FindUsers'
+import NewChat from './NewChat'
 
 class AllChats extends Component {
   constructor(props) {
@@ -28,6 +30,26 @@ class AllChats extends Component {
       }
     })
   }
+
+  // logout
+  logout = () => {
+    fetch('http://localhost:3000/sessions',{
+      method:'DELETE',
+      credentials: 'include'
+    })
+    .then((res) => {
+      res.json()
+      .then((data) => {
+        console.log(data);
+        this.props.logedin()
+        this.props.removeState()
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    })
+  }
+
 
   // 3 methods for changing state arrays
   removeOneMessage = (arr,index) => {
@@ -75,11 +97,18 @@ class AllChats extends Component {
 
   componentDidMount(){
     this.props.getContacts()
-
   }
+
   render(){
     return(
       <div>
+      <NewChat
+        getChats={this.props.getChats}
+        getContacts={this.props.getContacts}
+        friends={this.props.friends}
+        id={this.props.currentUser.id}
+      />
+      <span onClick={this.logout}> Logout </span>
       <h2>Chat Rooms</h2>
         {this.state.chats? this.state.chats.map((chat,index) => {
           return(
@@ -88,6 +117,9 @@ class AllChats extends Component {
             </span>
           )
         }): "Loading....."}
+
+        <FindUsers addToArr={this.props.addToArr}
+        currentUser={this.props.currentUser}/>
 
         <h2>Private Message</h2>
         {this.props.friends? this.props.friends.map((friend,index) => {

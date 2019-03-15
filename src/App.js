@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import io from 'socket.io-client'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import Nav from './components/Nav'
+import AllChats from './components/AllChats'
 
 class App extends Component {
   constructor(props){
@@ -179,7 +179,7 @@ class App extends Component {
   render() {
     return (
       <div className="">
-      {this.state.logedin? <Nav getContacts={this.getContacts}
+      {this.state.logedin? <AllChats getContacts={this.getContacts}
       changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}

@@ -50,6 +50,10 @@ class FindUsers extends Component {
     })
   }
 
+  closeUsers = () => {
+    this.setState({users:false})
+  }
+
 
   render(){
     return(
@@ -62,6 +66,9 @@ class FindUsers extends Component {
         <input type="submit"/>
       </form>
       {this.state.users? <span>
+          <span onClick={this.closeUsers}>
+          Close
+          </span>
           {this.state.users.info.map((user,index) => {
             return(
               <span key={index}>
