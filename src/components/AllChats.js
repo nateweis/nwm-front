@@ -18,12 +18,21 @@ class AllChats extends Component {
     this.changeChat(uniqeRoom)
   }
 
-  changeChat = (chat) => {
+  changeChat = (chat,index) => {
     this.props.changeRoom(chat)
     this.setState((pre) => {
       return{
-        room: chat
+        room: chat,
+        chatIndex:index
       }
+    })
+  }
+
+  removeOneMessage = (arr,index) => {
+    console.log("yah it got here");
+    this.setState((pre) => {
+      pre[arr].splice(index,1)
+      return{[arr]:pre[arr]}
     })
   }
 
@@ -31,17 +40,20 @@ class AllChats extends Component {
     if(!state.chats || state.chats.length !== props.chats.length){
 
       let room = {}
+      let index = 0
       if(props.chats){
-        for (let target of props.chats) {
-          if(target.current_room === target.chat_id){
-            room = target
+        for (let i = 0; i < props.chats.length; i++) {
+          if(props.chats[i].current_room === props.chats[i].chat_id){
+            room = props.chats[i]
+            index = i
           }
         }
       }
 
       return{
         chats: props.chats,
-        room: room
+        room: room,
+        chatIndex: index
       }
     }else{return null}
   }
@@ -57,7 +69,7 @@ class AllChats extends Component {
         {this.state.chats? this.state.chats.map((chat,index) => {
           return(
             <span key={index}>
-            <li onClick={()=>this.changeChat(chat)}>{chat.chat}</li>
+            <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
             </span>
           )
         }): "Loading....."}
@@ -77,6 +89,9 @@ class AllChats extends Component {
         chat={this.state.room}
         messages={this.props.messages}
         rmOne={this.props.rmOne}
+        fullArrUpdate={this.props.fullArrUpdate}
+        rmChat={this.removeOneMessage}
+        chatIndex={this.state.chatIndex}
         socket={this.props.socket}/>
 
       </div>

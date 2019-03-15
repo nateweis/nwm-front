@@ -125,6 +125,11 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.rmChat('chats',this.props.chatIndex)
+        this.setState((pre) => {
+          pre.chat.admin = false
+          return{chat:pre.chat, options:false}
+        })
       },(err) => {
         console.log(err);
         console.log("couldnt get delete data");
@@ -219,11 +224,12 @@ class Messages extends Component {
   }
 
   // user can edit any of there messages
-  editOneMessage = (message) => {
+  editOneMessage = (message,i) => {
     this.setState({
       editMessage:true,
       edit: message.message,
-      msgId: message.id
+      msgId: message.id,
+      msgIndex: i
     })
   }
 
@@ -247,6 +253,7 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.fullArrUpdate('messages', this.state.msgIndex, data.data)
       },(err) => {
         console.log("edit message no go on front");
       })
@@ -265,7 +272,7 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
-        this.props.rmOne(i)
+        this.props.rmOne('messages',i)
       },(err) => {
         console.log("prob on front deleting message");
       })
@@ -356,7 +363,7 @@ class Messages extends Component {
                   </strong> : {message.message}
 
                   {message.user_id === this.props.currentUser.id? <span>
-                  <button onClick={()=>this.editOneMessage(message)}>Edit</button>
+                  <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
                    <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
                    </span>:''}
 

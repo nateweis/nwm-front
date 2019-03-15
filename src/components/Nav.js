@@ -76,6 +76,7 @@ class Nav extends Component {
             socket={this.props.socket}
             friends={this.props.friends}
             chats={this.props.chats}
+            fullArrUpdate={this.props.fullArrUpdate}
             getContacts={this.props.getContacts}
             changeRoom={this.props.changeRoom}
             rmOne={this.props.rmOne}

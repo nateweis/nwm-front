@@ -137,13 +137,6 @@ class App extends Component {
     })
   }
 
-  removeOneMessage = (index) => {
-    this.setState((pre) => {
-      pre.messages.splice(index,1)
-      return{messages:pre.messages}
-    })
-  }
-
   removeStateInfo = () => {
     this.setState({
       chats:[],
@@ -152,11 +145,24 @@ class App extends Component {
     })
   }
 
-  addToArr = (name,data) => {
+  removeOneMessage = (arr,index) => {
     this.setState((pre) => {
-      pre[name] = [data,...pre[name]]
-      return{[name]: pre[name]}
+      pre[arr].splice(index,1)
+      return{[arr]:pre[arr]}
     })
+  }
+
+
+  addToArr = (arr,data) => {
+    this.setState((pre) => {
+      pre[arr] = [...pre[arr],data]
+      return{[arr]: pre[arr]}
+    })
+  }
+
+  fullArrUpdate = (arr, index, data) => {
+    this.removeOneMessage(arr, index)
+    this.addToArr(arr, data)
   }
 
 
@@ -178,7 +184,7 @@ class App extends Component {
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
-        addToArr={this.addToArr}
+        addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
         removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
         <div>
         <SignUp />
