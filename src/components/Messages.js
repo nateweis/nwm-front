@@ -291,7 +291,7 @@ class Messages extends Component {
 
   render(){
     return(
-      <div>
+      <div className="center">
       {/*==================================================
                     The header and option buttons
         ==================================================*/}

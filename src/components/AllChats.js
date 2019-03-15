@@ -101,34 +101,40 @@ class AllChats extends Component {
 
   render(){
     return(
-      <div>
-      <NewChat
-        getChats={this.props.getChats}
-        getContacts={this.props.getContacts}
-        friends={this.props.friends}
-        id={this.props.currentUser.id}
-      />
-      <span onClick={this.logout}> Logout </span>
-      <h2>Chat Rooms</h2>
-        {this.state.chats? this.state.chats.map((chat,index) => {
-          return(
-            <span key={index}>
-            <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
-            </span>
-          )
-        }): "Loading....."}
+      <div className="all-chats">
+          <div className="top"> <NewChat
+            getChats={this.props.getChats}
+            getContacts={this.props.getContacts}
+            friends={this.props.friends}
+            id={this.props.currentUser.id}
+          />
+          <span onClick={this.logout}> Logout </span>
+        </div>
 
-        <FindUsers addToArr={this.props.addToArr}
-        currentUser={this.props.currentUser}/>
 
-        <h2>Private Message</h2>
-        {this.props.friends? this.props.friends.map((friend,index) => {
-          return(
-            <span key={index}>
-              <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
-            </span>
-          )
-        }): "Loading....."}
+        <div className="left-side">
+          <h2>Chat Rooms</h2>
+            {this.state.chats? this.state.chats.map((chat,index) => {
+              return(
+                <span key={index}>
+                <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
+                </span>
+              )
+            }): "Loading....."}
+
+            <FindUsers addToArr={this.props.addToArr}
+            currentUser={this.props.currentUser}/>
+
+            <h2>Private Message</h2>
+            {this.props.friends? this.props.friends.map((friend,index) => {
+              return(
+                <span key={index}>
+                  <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
+                </span>
+              )
+            }): "Loading....."}
+        </div>
+
 
         <Messages
         currentUser={this.props.currentUser}

@@ -4,6 +4,24 @@ html,body{
   height: 100%;
   width:100%;
 }
-div{
+.all-chats{
   border: 1px solid gold;
+}
+.left-side{
+  border: 1px solid lightblue;
+  width:25%;
+  height: 100%;
+}
+
+.center{
+  border: 1px solid pink;
+  width: 70%;
+}
+
+.top{
+  border: 1px solid lightgreen;
+}
+form{
+  border: 1px solid black;
+  width: 198px;
 }
