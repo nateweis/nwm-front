@@ -23,6 +23,7 @@ class Nav extends Component {
       .then((data) => {
         console.log(data);
         this.props.logedin()
+        this.props.removeState()
       })
       .catch((err) => {
         console.log(err);

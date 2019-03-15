@@ -23,10 +23,19 @@ class App extends Component {
     this.socket.emit('room',chat.chat)
     // update user room info
     this.updateCurrentRoom(chat)
-    // repopulate chat page apon entering a room
-    this.getChatInfo()
     // reset the next room that will be left
     this.setState({leave:chat.chat})
+  }
+
+  enterFirstChat = () => {
+    let room = ""
+    for (let i = 0; i < this.state.chats.length; i++) {
+      if(this.state.chats[i].chat_id === this.state.currentUser.current_room){
+        room = this.state.chats[i].chat
+      }
+    }
+    this.socket.emit('room',room)
+    this.setState({leave:room})
   }
 
   newMessage = (msg) => {
@@ -80,6 +89,7 @@ class App extends Component {
           this.setState(() => {
             return{chats:data}
           })
+          this.enterFirstChat()
         },(err) => {
           console.log(err);
           console.log("somthing wrong in getting the chats for user on frontend");
@@ -89,7 +99,6 @@ class App extends Component {
 
   getChatInfo = () => {
     // fethch the chats info based on the room you are in
-    const room = this.state.currentUser.current_room
     fetch('http://localhost:3000/messages')
     .then((res) => {
       // populate the message state with the info
@@ -117,19 +126,31 @@ class App extends Component {
       res.json()
       .then((data) => {
         console.log(data);
-        this.getUser()
+        this.setState((pre) => {
+          pre.currentUser.current_room = chat.chat_id
+          return{currentUser: pre.currentUser}
+        })
       },(err) => {
         console.log("didnt go through in changeRoom frontend");
       })
     })
   }
 
+  removeStateInfo = () => {
+    this.setState({
+      chats:[],
+      currentUser:{},
+      friends:[]
+    })
+  }
+
 
 
   componentDidMount(){
+    this.getChatInfo()
     this.getUser()
     this.socket.on('chat',(msg) => {
-      this.setState({messages:[msg,...this.state.messages]})
+      this.setState({messages:[...this.state.messages,msg]})
     })
   }
 
@@ -141,7 +162,8 @@ class App extends Component {
       changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}
-        logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
+        logedin={this.toggleLogdin} currentUser={this.state.currentUser}
+        removeState={this.removeStateInfo}/>:
         <div>
         <SignUp />
         <Login getUser={this.getUser} />
