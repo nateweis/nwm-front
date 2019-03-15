@@ -76,6 +76,7 @@ class AllChats extends Component {
         friends={this.props.friends}
         chat={this.state.room}
         messages={this.props.messages}
+        rmOne={this.props.rmOne}
         socket={this.props.socket}/>
 
       </div>

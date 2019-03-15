@@ -256,7 +256,7 @@ class Messages extends Component {
   }
 
   // user can delete their own messages
-  removeOneMessage = (msg) => {
+  removeOneMessage = (msg,i) => {
     fetch('http://localhost:3000/messages/'+ msg.id,{
       method:'DELETE',
       credentials: 'include'
@@ -265,6 +265,7 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.rmOne(i)
       },(err) => {
         console.log("prob on front deleting message");
       })
@@ -345,22 +346,27 @@ class Messages extends Component {
           ==================================================*/}
 
         <div className="messages">
-          {this.props.messages.filter( str => str.chat_id === this.props.currentUser.current_room ).map((message, index) => {
-            return(
+          {this.props.messages.map((message, index) => {
+            if(message.chat_id === this.props.currentUser.current_room){
+              return(
 
-                <div key={index}>
-                <strong>
-                {message.user_id === this.props.currentUser.id? "You" : message.sender}
-                </strong> : {message.message}
+                  <div key={index}>
+                  <strong>
+                  {message.user_id === this.props.currentUser.id? "You" : message.sender}
+                  </strong> : {message.message}
 
-                {message.user_id === this.props.currentUser.id? <span>
-                <button onClick={()=>this.editOneMessage(message)}>Edit</button>
-                 <button onClick={()=>this.removeOneMessage(message)}>Remove</button>
-                 </span>:''}
+                  {message.user_id === this.props.currentUser.id? <span>
+                  <button onClick={()=>this.editOneMessage(message)}>Edit</button>
+                   <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
+                   </span>:''}
 
-                </div>
+                  </div>
 
-            )
+              )
+            }else{
+              return("")
+            }
+
           })}
 
           {/*==================================================

@@ -18,7 +18,7 @@ class FindUsers extends Component {
     .then((res) => {
       res.json()
       .then((data) => {
-        this.setState({users:data})
+        this.setState({users:data, username:''})
       },(err) => {
         console.log(err);
       })
@@ -43,6 +43,7 @@ class FindUsers extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.addToArr('friends', friend)
       },(err) => {
         console.log(err);
       })

@@ -49,7 +49,8 @@ class Nav extends Component {
 
           <Switch>
             <Route exact path='/otherusers' render={
-              ()=> <FindUsers currentUser={this.props.currentUser}/>}/>
+              ()=> <FindUsers addToArr={this.props.addToArr}
+              currentUser={this.props.currentUser}/>}/>
 
             <Route exact path='/contacts'
             render={()=> <Contacts
@@ -77,6 +78,7 @@ class Nav extends Component {
             chats={this.props.chats}
             getContacts={this.props.getContacts}
             changeRoom={this.props.changeRoom}
+            rmOne={this.props.rmOne}
            />
         </div>
       </BrowserRouter>

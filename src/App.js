@@ -11,7 +11,8 @@ class App extends Component {
      logedin: false,
      currentUser:{},
      messages:[],
-     leave:''
+     leave:'',
+     friends:[]
     }
   }
   socket = io.connect('http://localhost:3000');
@@ -136,11 +137,25 @@ class App extends Component {
     })
   }
 
+  removeOneMessage = (index) => {
+    this.setState((pre) => {
+      pre.messages.splice(index,1)
+      return{messages:pre.messages}
+    })
+  }
+
   removeStateInfo = () => {
     this.setState({
       chats:[],
       currentUser:{},
       friends:[]
+    })
+  }
+
+  addToArr = (name,data) => {
+    this.setState((pre) => {
+      pre[name] = [data,...pre[name]]
+      return{[name]: pre[name]}
     })
   }
 
@@ -163,7 +178,8 @@ class App extends Component {
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
-        removeState={this.removeStateInfo}/>:
+        addToArr={this.addToArr}
+        removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
         <div>
         <SignUp />
         <Login getUser={this.getUser} />
