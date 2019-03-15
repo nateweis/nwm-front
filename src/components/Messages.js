@@ -41,7 +41,7 @@ class Messages extends Component {
         userArr: this.state.friendId,
         chat_id: this.state.chat.chat_id
       }
-      fetch('http://localhost:3000/chats/many',{
+      fetch('https://nwm-backend.herokuapp.com/chats/many',{
         method:'POST',
         body:JSON.stringify(obj),
         headers:{
@@ -114,7 +114,7 @@ class Messages extends Component {
   // as admin completely end the chat for everyone
   nukeChat = () => {
     const id = this.state.chat.chat_id
-    fetch('http://localhost:3000/chats/'+id,{
+    fetch('https://nwm-backend.herokuapp.com/chats/'+id,{
       method: 'DELETE',
       headers:{
       'Accept': 'application/json, text/plain, */*',

@@ -15,7 +15,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3000/sessions',{
+    fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'POST',
       body:JSON.stringify(this.state),
       headers:{
@@ -32,7 +32,7 @@ class Login extends Component {
           username:'',
           password:''
         })
-        
+
         this.props.getUser()
       },(err) => {
         console.log(err);
