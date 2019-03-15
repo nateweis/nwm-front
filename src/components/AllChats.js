@@ -111,42 +111,44 @@ class AllChats extends Component {
           <span onClick={this.logout}> Logout </span>
         </div>
 
+        <div className="flex-container">
+          <div className="left-side">
+            <h2>Chat Rooms</h2>
+              {this.state.chats? this.state.chats.map((chat,index) => {
+                return(
+                  <span key={index}>
+                  <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
+                  </span>
+                )
+              }): "Loading....."}
 
-        <div className="left-side">
-          <h2>Chat Rooms</h2>
-            {this.state.chats? this.state.chats.map((chat,index) => {
-              return(
-                <span key={index}>
-                <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
-                </span>
-              )
-            }): "Loading....."}
+              <FindUsers addToArr={this.props.addToArr}
+              currentUser={this.props.currentUser}/>
 
-            <FindUsers addToArr={this.props.addToArr}
-            currentUser={this.props.currentUser}/>
+              <h2>Private Message</h2>
+              {this.props.friends? this.props.friends.map((friend,index) => {
+                return(
+                  <span key={index}>
+                    <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
+                  </span>
+                )
+              }): "Loading....."}
+          </div>
 
-            <h2>Private Message</h2>
-            {this.props.friends? this.props.friends.map((friend,index) => {
-              return(
-                <span key={index}>
-                  <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
-                </span>
-              )
-            }): "Loading....."}
+
+          <Messages
+          currentUser={this.props.currentUser}
+          friends={this.props.friends}
+          chat={this.state.room}
+          messages={this.props.messages}
+          rmOne={this.props.rmOne}
+          fullArrUpdate={this.props.fullArrUpdate}
+          rmChat={this.removeOneMessage}
+          chatIndex={this.state.chatIndex}
+          editChat={this.fullArrUpdate}
+          socket={this.props.socket}/>
         </div>
 
-
-        <Messages
-        currentUser={this.props.currentUser}
-        friends={this.props.friends}
-        chat={this.state.room}
-        messages={this.props.messages}
-        rmOne={this.props.rmOne}
-        fullArrUpdate={this.props.fullArrUpdate}
-        rmChat={this.removeOneMessage}
-        chatIndex={this.state.chatIndex}
-        editChat={this.fullArrUpdate}
-        socket={this.props.socket}/>
 
       </div>
     )

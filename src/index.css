@@ -15,11 +15,15 @@ html,body{
 
 .center{
   border: 1px solid pink;
-  width: 70%;
+  width: 75%;
 }
 
 .top{
   border: 1px solid lightgreen;
+}
+.flex-container{
+  border: 1px solid purple;
+  display: flex;
 }
 form{
   border: 1px solid black;
