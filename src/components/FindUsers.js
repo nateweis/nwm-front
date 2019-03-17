@@ -18,7 +18,7 @@ class FindUsers extends Component {
     .then((res) => {
       res.json()
       .then((data) => {
-        this.setState({users:data})
+        this.setState({users:data, username:''})
       },(err) => {
         console.log(err);
       })
@@ -43,10 +43,15 @@ class FindUsers extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.addToArr('friends', friend)
       },(err) => {
         console.log(err);
       })
     })
+  }
+
+  closeUsers = () => {
+    this.setState({users:false})
   }
 
 
@@ -61,6 +66,9 @@ class FindUsers extends Component {
         <input type="submit"/>
       </form>
       {this.state.users? <span>
+          <span onClick={this.closeUsers}>
+          Close
+          </span>
           {this.state.users.info.map((user,index) => {
             return(
               <span key={index}>

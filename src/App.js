@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import io from 'socket.io-client'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import Nav from './components/Nav'
+import AllChats from './components/AllChats'
 
 class App extends Component {
   constructor(props){
@@ -11,10 +11,13 @@ class App extends Component {
      logedin: false,
      currentUser:{},
      messages:[],
-     leave:''
+     leave:'',
+     friends:[]
     }
   }
-  socket = io.connect('https://nwm-backend.herokuapp.com/');
+
+  socket = io.connect('https://nwm-backend.herokuapp.com');
+
 
   changeRoom = (chat) => {
     // leave old room
@@ -23,10 +26,19 @@ class App extends Component {
     this.socket.emit('room',chat.chat)
     // update user room info
     this.updateCurrentRoom(chat)
-    // repopulate chat page apon entering a room
-    this.getChatInfo()
     // reset the next room that will be left
     this.setState({leave:chat.chat})
+  }
+
+  enterFirstChat = () => {
+    let room = ""
+    for (let i = 0; i < this.state.chats.length; i++) {
+      if(this.state.chats[i].chat_id === this.state.currentUser.current_room){
+        room = this.state.chats[i].chat
+      }
+    }
+    this.socket.emit('room',room)
+    this.setState({leave:room})
   }
 
   newMessage = (msg) => {
@@ -41,7 +53,6 @@ class App extends Component {
   }
 
   getUser = () => {
-    console.log("running");
     fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'GET',
       credentials: 'include'
@@ -52,6 +63,7 @@ class App extends Component {
         console.log(data);
         this.setState({currentUser:data})
         this.getContacts()
+        this.setState({logedin:true})
       },(err) => {
         console.log(err);
       })
@@ -80,6 +92,7 @@ class App extends Component {
           this.setState(() => {
             return{chats:data}
           })
+          this.enterFirstChat()
         },(err) => {
           console.log(err);
           console.log("somthing wrong in getting the chats for user on frontend");
@@ -88,9 +101,8 @@ class App extends Component {
   }
 
   getChatInfo = () => {
-    // fethch the chats info based on the room you are in
-    const room = this.state.currentUser.current_room
-    fetch('https://nwm-backend.herokuapp.com/messages/'+ room)
+    // fetch the chats info based on the room you are in
+    fetch('https://nwm-backend.herokuapp.com/messages')
     .then((res) => {
       // populate the message state with the info
       res.json()
@@ -117,18 +129,51 @@ class App extends Component {
       res.json()
       .then((data) => {
         console.log(data);
-        this.getUser()
+        this.setState((pre) => {
+          pre.currentUser.current_room = chat.chat_id
+          return{currentUser: pre.currentUser}
+        })
       },(err) => {
         console.log("didnt go through in changeRoom frontend");
       })
     })
   }
 
+  removeStateInfo = () => {
+    this.setState({
+      chats:[],
+      currentUser:{},
+      friends:[]
+    })
+  }
+
+  removeOneMessage = (arr,index) => {
+    this.setState((pre) => {
+      pre[arr].splice(index,1)
+      return{[arr]:pre[arr]}
+    })
+  }
+
+
+  addToArr = (arr,data) => {
+    this.setState((pre) => {
+      pre[arr] = [...pre[arr],data]
+      return{[arr]: pre[arr]}
+    })
+  }
+
+  fullArrUpdate = (arr, index, data) => {
+    this.removeOneMessage(arr, index)
+    this.addToArr(arr, data)
+  }
+
 
 
   componentDidMount(){
+    this.getChatInfo()
+    this.getUser()
     this.socket.on('chat',(msg) => {
-      this.setState({messages:[msg,...this.state.messages]})
+      this.setState({messages:[...this.state.messages,msg]})
     })
   }
 
@@ -136,14 +181,16 @@ class App extends Component {
   render() {
     return (
       <div className="">
-      {this.state.logedin? <Nav getContacts={this.getContacts}
+      {this.state.logedin? <AllChats getContacts={this.getContacts}
       changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}
-        logedin={this.toggleLogdin} currentUser={this.state.currentUser}/>:
+        logedin={this.toggleLogdin} currentUser={this.state.currentUser}
+        addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
+        removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
         <div>
         <SignUp />
-        <Login getUser={this.getUser} logedin={this.toggleLogdin} />
+        <Login getUser={this.getUser} />
         </div>
       }
       </div>
