@@ -357,10 +357,10 @@ class Messages extends Component {
             if(message.chat_id === this.props.currentUser.current_room){
               return(
 
-                  <div key={index}>
+                  <div className="message" key={index}>
                   <strong>
                   {message.user_id === this.props.currentUser.id? "You" : message.sender}
-                  </strong> : {message.message}
+                  </strong>  :<br/> {message.message}
 
                   {message.user_id === this.props.currentUser.id? <span>
                   <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
@@ -381,13 +381,13 @@ class Messages extends Component {
             ==================================================*/}
 
           <form className="new-msg" onSubmit={this.submit}>
+          <input type='submit'/>
             <input
               type="text"
               value={this.state.newMsg}
               placeholder="New Message"
               onChange={this.handleChange}
             />
-            <input type='submit'/>
           </form>
         </div>
 

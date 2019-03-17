@@ -37,4 +37,21 @@ form{
 .new-msg{
   position: fixed;
   bottom: 5%;
+  width: 100%;
+}
+.new-msg input[type="text"]{
+  display: inline-block;
+  width: 60%;
+}
+.new-msg input[type="submit"]{
+  display: inline-block;
+  margin-left: 3%;
+}
+.message{
+  border: 1px solid black;
+  width: 85%;
+  padding-left: 5%;
+  margin-left: 5%;
+  margin-top: 2%;
+  border-radius: 10px;
 }
