@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import io from 'socket.io-client'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
-import Nav from './components/Nav'
+import AllChats from './components/AllChats'
 
 class App extends Component {
   constructor(props){
@@ -11,7 +11,8 @@ class App extends Component {
      logedin: false,
      currentUser:{},
      messages:[],
-     leave:''
+     leave:'',
+     friends:[]
     }
   }
   socket = io.connect('https://nwm-backend.herokuapp.com');
@@ -144,6 +145,26 @@ class App extends Component {
     })
   }
 
+  removeOneMessage = (arr,index) => {
+    this.setState((pre) => {
+      pre[arr].splice(index,1)
+      return{[arr]:pre[arr]}
+    })
+  }
+
+
+  addToArr = (arr,data) => {
+    this.setState((pre) => {
+      pre[arr] = [...pre[arr],data]
+      return{[arr]: pre[arr]}
+    })
+  }
+
+  fullArrUpdate = (arr, index, data) => {
+    this.removeOneMessage(arr, index)
+    this.addToArr(arr, data)
+  }
+
 
 
   componentDidMount(){
@@ -158,12 +179,13 @@ class App extends Component {
   render() {
     return (
       <div className="">
-      {this.state.logedin? <Nav getContacts={this.getContacts}
+      {this.state.logedin? <AllChats getContacts={this.getContacts}
       changeRoom={this.changeRoom} getChats={this.getChats}
         friends={this.state.friends} chats={this.state.chats}
         messages={this.state.messages} socket={this.newMessage}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
-        removeState={this.removeStateInfo}/>:
+        addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
+        removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
         <div>
         <SignUp />
         <Login getUser={this.getUser} />

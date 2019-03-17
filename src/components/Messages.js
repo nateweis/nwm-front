@@ -125,6 +125,11 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.rmChat('chats',this.props.chatIndex)
+        this.setState((pre) => {
+          pre.chat.admin = false
+          return{chat:pre.chat, options:false}
+        })
       },(err) => {
         console.log(err);
         console.log("couldnt get delete data");
@@ -164,7 +169,7 @@ class Messages extends Component {
     .then((res) => {
       res.json()
       .then((data) => {
-        console.log(data);
+        this.props.editChat('chats', this.props.chatIndex, data.data)
       },(err) => {
         console.log(err);
       })
@@ -219,11 +224,12 @@ class Messages extends Component {
   }
 
   // user can edit any of there messages
-  editOneMessage = (message) => {
+  editOneMessage = (message,i) => {
     this.setState({
       editMessage:true,
       edit: message.message,
-      msgId: message.id
+      msgId: message.id,
+      msgIndex: i
     })
   }
 
@@ -247,6 +253,7 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.fullArrUpdate('messages', this.state.msgIndex, data.data)
       },(err) => {
         console.log("edit message no go on front");
       })
@@ -256,7 +263,7 @@ class Messages extends Component {
   }
 
   // user can delete their own messages
-  removeOneMessage = (msg) => {
+  removeOneMessage = (msg,i) => {
     fetch('http://localhost:3000/messages/'+ msg.id,{
       method:'DELETE',
       credentials: 'include'
@@ -265,6 +272,7 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
+        this.props.rmOne('messages',i)
       },(err) => {
         console.log("prob on front deleting message");
       })
@@ -283,7 +291,7 @@ class Messages extends Component {
 
   render(){
     return(
-      <div>
+      <div className="center">
       {/*==================================================
                     The header and option buttons
         ==================================================*/}
@@ -345,29 +353,34 @@ class Messages extends Component {
           ==================================================*/}
 
         <div className="messages">
-          {this.props.messages.filter( str => str.chat_id === this.props.currentUser.current_room ).map((message, index) => {
-            return(
+          {this.props.messages.map((message, index) => {
+            if(message.chat_id === this.props.currentUser.current_room){
+              return(
 
-                <div key={index}>
-                <strong>
-                {message.user_id === this.props.currentUser.id? "You" : message.sender}
-                </strong> : {message.message}
+                  <div key={index}>
+                  <strong>
+                  {message.user_id === this.props.currentUser.id? "You" : message.sender}
+                  </strong> : {message.message}
 
-                {message.user_id === this.props.currentUser.id? <span>
-                <button onClick={()=>this.editOneMessage(message)}>Edit</button>
-                 <button onClick={()=>this.removeOneMessage(message)}>Remove</button>
-                 </span>:''}
+                  {message.user_id === this.props.currentUser.id? <span>
+                  <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
+                   <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
+                   </span>:''}
 
-                </div>
+                  </div>
 
-            )
+              )
+            }else{
+              return("")
+            }
+
           })}
 
           {/*==================================================
                     The form to add a new message
             ==================================================*/}
 
-          <form onSubmit={this.submit}>
+          <form className="new-msg" onSubmit={this.submit}>
             <input
               type="text"
               value={this.state.newMsg}
