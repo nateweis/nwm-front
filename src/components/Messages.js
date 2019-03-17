@@ -380,7 +380,7 @@ class Messages extends Component {
                     The form to add a new message
             ==================================================*/}
 
-          <form onSubmit={this.submit}>
+          <form className="new-msg" onSubmit={this.submit}>
             <input
               type="text"
               value={this.state.newMsg}
