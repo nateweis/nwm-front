@@ -14,7 +14,7 @@ class Nav extends Component {
  }
 
   logout = () => {
-    fetch('http://localhost:3000/sessions',{
+    fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'DELETE',
       credentials: 'include'
     })

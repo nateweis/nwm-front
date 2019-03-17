@@ -158,7 +158,7 @@ class Messages extends Component {
       id: this.state.chat.chat_id,
       chat: this.state.newName
     }
-    fetch('http://localhost:3000/chats',{
+    fetch('https://nwm-backend.herokuapp.com/chats',{
       method:'PUT',
       body:JSON.stringify(obj),
       headers:{
@@ -181,7 +181,7 @@ class Messages extends Component {
   // get the chat participants
   getChatParticipants = () => {
     const id = this.state.chat.chat_id
-    fetch('http://localhost:3000/chats/members/'+id)
+    fetch('https://nwm-backend.herokuapp.com/chats/members/'+id)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -199,7 +199,7 @@ class Messages extends Component {
       user:member,
       chat:this.state.chat.chat_id
     }
-    fetch('http://localhost:3000/chats/remove/member',{
+    fetch('https://nwm-backend.herokuapp.com/chats/remove/member',{
       method:'DELETE',
       body:JSON.stringify(obj),
       headers:{
@@ -241,7 +241,7 @@ class Messages extends Component {
     e.preventDefault()
 
     const obj = {edit:this.state.edit}
-    fetch('http://localhost:3000/messages/'+ this.state.msgId,{
+    fetch('https://nwm-backend.herokuapp.com/messages/'+ this.state.msgId,{
       method:'PUT',
       body:JSON.stringify(obj),
       headers:{
@@ -264,7 +264,7 @@ class Messages extends Component {
 
   // user can delete their own messages
   removeOneMessage = (msg,i) => {
-    fetch('http://localhost:3000/messages/'+ msg.id,{
+    fetch('https://nwm-backend.herokuapp.com/messages/'+ msg.id,{
       method:'DELETE',
       credentials: 'include'
     })
