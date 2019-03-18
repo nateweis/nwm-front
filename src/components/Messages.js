@@ -234,7 +234,7 @@ class Messages extends Component {
 
   // remove a person from current chats
   removePersonFromChat = (obj) => {
-    fetch('http://localhost:3000/chats/remove/member',{
+    fetch('https://nwm-backend.herokuapp.com/chats/remove/member',{
       method:'DELETE',
       body:JSON.stringify(obj),
       headers:{

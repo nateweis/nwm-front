@@ -27,7 +27,7 @@ class Profile extends Component {
   }
 
   updateUserData = () => {
-    fetch('http://localhost:3000/users/' + this.props.currentUser.id, {
+    fetch('https://nwm-backend.herokuapp.com/users/' + this.props.currentUser.id, {
       method:'PUT',
       body:JSON.stringify(this.state),
       headers:{
