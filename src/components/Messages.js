@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 
 class Messages extends Component {
   constructor(props) {
@@ -13,6 +14,21 @@ class Messages extends Component {
       edit:''
     }
   }
+
+  // autoscroll only when on bottom
+  componentWillUpdate(){
+    const node = ReactDOM.findDOMNode(this)
+    this.shouldScrollToBottom = node.scrollTop + node.clientHeight >= node.scrollHeight
+  }
+
+  // if on bottom autoscroll
+  componentDidUpdate(){
+    // if(this.shouldScrollToBottom){
+      const node = ReactDOM.findDOMNode(this)
+      node.scrollTop = node.scrollHeight
+    // }
+  }
+
   static getDerivedStateFromProps(props, state){
     if(!(state.chat && props.chat )|| state.chat.chat !== props.chat.chat){
       return{chat: props.chat}
@@ -199,6 +215,25 @@ class Messages extends Component {
       user:member,
       chat:this.state.chat.chat_id
     }
+    this.removePersonFromChat(obj)
+    this.setState((pre) => {
+      pre.participants.splice(index,1)
+      return{participants:pre.participants}
+    })
+  }
+
+  // leave Chat
+  leaveChat = () => {
+    const obj = {
+      user: this.props.currentUser.id,
+      chat:this.state.chat.chat_id
+    }
+    this.removePersonFromChat(obj)
+    this.props.rmChat("chats", this.props.chatIndex)
+  }
+
+  // remove a person from current chats
+  removePersonFromChat = (obj) => {
     fetch('https://nwm-backend.herokuapp.com/chats/remove/member',{
       method:'DELETE',
       body:JSON.stringify(obj),
@@ -211,16 +246,11 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
-        this.setState((pre) => {
-          pre.participants.splice(index,1)
-          return{participants:pre.participants}
-        })
       },(err) => {
         console.log(err);
         console.log("couldnt remove person from chat frontend");
       })
     })
-
   }
 
   // user can edit any of there messages
@@ -292,80 +322,111 @@ class Messages extends Component {
   render(){
     return(
       <div className="center">
-      {/*==================================================
-                    The header and option buttons
-        ==================================================*/}
-        <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
-        {/* option button for now just for admin need to make for everyone*/}
-        {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
-        {this.state.chat? this.state.options? <div>
-          {/* add frinds to chat (just for admin) */}
-            <button onClick={this.addFriends}>Add Friends to the Chat</button>
-            {/* rename/delte chat (just for admin) */}
-            <button onClick={this.chatRename}>Rename Chat</button>
-            <button onClick={this.warning}>Remove Chat</button>
-            {/* shows group members (4everyone) */}
-            <h4>Participants in "{this.state.chat.chat}" Room</h4>
-            {this.state.participants.map((member, index) => {
-              return(
-                <div key={index}>
-                  <li>{member.username}
-                  {this.state.chat.admin? member.id !== this.props.currentUser.id?
-                    <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
-                  </li>
-                </div>
-              )
-            })}
-          </div> :"" :""}
+        <div className={this.state.options? "options options-menu":"options"}>
+        {/*==================================================
+                      The header and option buttons
+          ==================================================*/}
 
-          {/*==================================================
-                  The from to add friends to the chatroom
-            ==================================================*/}
-
-        {this.state.form? <div>
-            <div className="addFriend">
-            {this.props.friends.map((friend,index) => {
-              return(
-                <span key={index}>
-                {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
-                <span onClick={this.closeForm}>X</span>
-                <br/>
-                </span>
-              )
-            })}
-            </div>
-            <div className="addedFriend">
-              <button onClick={this.handleSubmit}>Submit</button>
-              {this.state.friendName.map((friend,index) => {
+          {/* option button for now just for admin need to make for everyone*/}
+          {this.state.chat.admin? <button className="option-btn" onClick={this.optionMenu}>Options</button> : ''}
+          {this.state.chat? this.state.options? <div>
+            {/* add frinds to chat (just for admin) */}
+              <button onClick={this.addFriends}>Add Friends to the Chat</button>
+              {/* rename/delte chat (just for admin) */}
+              <button onClick={this.chatRename}>Rename Chat</button>
+              <button onClick={this.warning}>Remove Chat</button>
+              {/* shows group members (4everyone) */}
+              <button onClick={this.leaveChat}>Leave Chat</button>
+              <h4>Participants in "{this.state.chat.chat}" Room</h4>
+              {this.state.participants.map((member, index) => {
                 return(
-                  <span key={index}>
-                  {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
-                  </span>
+                  <div key={index}>
+                    <li>{member.username}
+                    {this.state.chat.admin? member.id !== this.props.currentUser.id?
+                      <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
+                    </li>
+                  </div>
                 )
               })}
-            </div>
+            </div> :"" :""}
 
-          </div>
-        :""}
+            {/*==================================================
+                    The from to add friends to the chatroom
+              ==================================================*/}
+
+          {this.state.form? <div className="friend-que">
+              <div className="addFriend">
+              <h4>Available Friends to Add</h4>
+              <span onClick={this.closeForm}>X</span> <br/>
+              {this.props.friends.map((friend,index) => {
+                let onList = false
+                for(let i = 0; i < this.state.participants.length; i++){
+                  if(this.state.participants[i].username === friend.username){
+                    onList = true
+                  }
+                }
+                if(onList === false){
+                  return(
+                    <span key={index}>
+                    {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                    <br/>
+                    </span>
+                  )
+                }else{return('')}
+
+              })}
+
+              </div>
+              <div className="addedFriend">
+              <h4>Friends To Be Added</h4>
+                <button onClick={this.handleSubmit}>Submit</button>
+                {this.state.friendName.map((friend,index) => {
+                  return(
+                    <span key={index}>
+                    {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
+                    </span>
+                  )
+                })}
+              </div>
+
+            </div>
+          :""}
+        </div>
+
 
         {/*==================================================
                       The actual chat messages
           ==================================================*/}
 
-        <div className="messages">
+        <div className="chat-screen">
           {this.props.messages.map((message, index) => {
             if(message.chat_id === this.props.currentUser.current_room){
               return(
 
-                  <div key={index}>
-                  <strong>
-                  {message.user_id === this.props.currentUser.id? "You" : message.sender}
-                  </strong> : {message.message}
+                  <div className={message.user_id === this.props.currentUser.id?
+                    "message message-user" :"message"} key={index}>
 
-                  {message.user_id === this.props.currentUser.id? <span>
-                  <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
-                   <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
-                   </span>:''}
+                    <div className="avatar">
+                    <img src={message.pic? message.pic :"default-user.png"} />
+                     </div>
+
+                    <div className="msg">
+                      <div className="pointer"> </div>
+                      <div className="inner-msg">
+                        <strong>
+                        {message.user_id === this.props.currentUser.id? "You" : message.sender}
+                        </strong>
+
+                         <br/> {message.message}
+                      </div>
+
+                      {message.user_id === this.props.currentUser.id? <span className="message-btn">
+                      <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
+                       <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
+                       </span>:''}
+
+                    </div>
+
 
                   </div>
 
@@ -381,13 +442,13 @@ class Messages extends Component {
             ==================================================*/}
 
           <form className="new-msg" onSubmit={this.submit}>
+          <input type='submit'/>
             <input
               type="text"
               value={this.state.newMsg}
               placeholder="New Message"
               onChange={this.handleChange}
             />
-            <input type='submit'/>
           </form>
         </div>
 

@@ -4,6 +4,12 @@ html,body{
   height: 100%;
   width:100%;
 }
+button, input[type="submit"]{
+  cursor: pointer;
+}
+/*===================================================================*/
+/*====================== General algnment  ==========================*/
+/*===================================================================*/
 .all-chats{
   border: 1px solid gold;
   height: 100vh;
@@ -16,25 +22,224 @@ html,body{
   border: 1px solid lightblue;
   width:25%;
   height: 100%;
+
+  color: #ddd;
 }
 
 .center{
   border: 1px solid pink;
   width: 75%;
+  overflow: scroll;
+  background-color: silver;
 }
 
 .top{
   border: 1px solid lightgreen;
+  display: flex;
 }
 .flex-container{
   border: 1px solid purple;
   display: flex;
+  background-color:#30476d;
 }
 form{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 198px;
 }
+/*===================================================================*/
+/*============================ Message Box ==========================*/
+/*===================================================================*/
 .new-msg{
   position: fixed;
   bottom: 5%;
+  width: 100%;
 }
+.new-msg input[type="text"]{
+  display: inline-block;
+  width: 60%;
+}
+.new-msg input[type="submit"]{
+  display: inline-block;
+  margin-left: 3%;
+}
+.message-btn{
+  position:absolute;
+  right: 60%;
+  display: none;
+}
+.message:hover .message-btn{
+  /* display: inline; */
+}
+.chat-screen{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 2;
+
+}
+.message{
+  /* border: 1px solid black; */
+  /* width: 85%; */
+  flex-grow: 2;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1.2rem;
+}
+.avatar img{
+  width: 3rem;
+  height: 3.1rem;
+  border-radius: 50%;
+}
+.message .avatar{
+  margin-right: .5rem;
+}
+.message-user .avatar{
+  margin-right: 0;
+  margin-left: .5rem;
+}
+.msg{
+  display: flex;
+  justify-content: space-between;
+}
+.msg .pointer{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 1rem 1.5rem 0;
+  border-color: transparent #fff transparent transparent;
+  margin: auto 0;
+}
+.inner-msg{
+  background-color: #fff;
+  width: 100%;
+  padding: 1.5rem 1rem;
+  border-radius: 0 4px 4px 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  margin: auto 0;
+}
+.message-user, .message-user .msg {
+  flex-direction: row-reverse;
+}
+.message-user .msg .pointer{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1.5rem 1rem 0 0;
+  border-color: #fff transparent transparent transparent ;
+  margin: auto 0;
+}
+.message-user .msg .inner-msg{
+  border-radius: 4px 0 4px 4px;
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: right;
+}
+
+/*===================================================================*/
+/*====================== Message Options  ===========================*/
+/*===================================================================*/
+.friend-que{
+  border: 2px solid gold;
+  display: flex;
+
+}
+.addFriend,.addedFriend{
+  border: 1px solid orange;
+  width:50%;
+}
+
+.options{
+  /* border: 1px solid orange; */
+  position: fixed;
+  right: 0;
+  color: #eee;
+}
+.options-menu{
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 75%;
+}
+.options h4{
+  color: #032254;
+  text-align: center;
+}
+.option-btn{
+  float: right;
+}
+/*===================================================================*/
+/*====================== Top Banner/Nav?  ===========================*/
+/*===================================================================*/
+.top h3{
+  /* border:1px solid black; */
+  width: 35%;
+  text-align: center;
+}
+.top > *{
+  margin: auto;
+}
+
+/*===================================================================*/
+/*============================= Side Nav  ===========================*/
+/*===================================================================*/
+.active{
+  border:1px solid lightgreen;
+  color:pink;
+}
+.left-side h3{
+  text-align: center;
+}
+.left-side li{
+  list-style: none;
+  padding-left: 15px;
+}
+.pm,.chat-room-msg{
+  padding-bottom: 10px;
+  display: block;
+}
+.pm:hover,.chat-room-msg:hover{
+  border: 1px solid green;
+  color:pink;
+}
+
+/*===================================================================*/
+/*========================= Side Nav Find user ======================*/
+/*===================================================================*/
+.find-user,.pm-box,.chat-room{
+  max-height: 25%;
+  overflow: scroll;
+}
+
+.find-user{
+  border: 1px solid green;
+}
+.close-btn{
+  cursor: pointer;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  */
