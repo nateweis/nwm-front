@@ -322,6 +322,7 @@ class Messages extends Component {
               <button onClick={this.chatRename}>Rename Chat</button>
               <button onClick={this.warning}>Remove Chat</button>
               {/* shows group members (4everyone) */}
+              <button>Leave Chat</button>
               <h4>Participants in "{this.state.chat.chat}" Room</h4>
               {this.state.participants.map((member, index) => {
                 return(

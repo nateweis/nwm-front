@@ -22,6 +22,8 @@ button, input[type="submit"]{
   border: 1px solid lightblue;
   width:25%;
   height: 100%;
+
+  color: #ddd;
 }
 
 .center{
@@ -38,6 +40,7 @@ button, input[type="submit"]{
 .flex-container{
   border: 1px solid purple;
   display: flex;
+  background-color:#30476d;
 }
 form{
   /* border: 1px solid black; */
@@ -180,6 +183,7 @@ form{
 /*===================================================================*/
 .active{
   border:1px solid lightgreen;
+  color:pink;
 }
 .left-side h3{
   text-align: center;
@@ -188,8 +192,30 @@ form{
   list-style: none;
   padding-left: 15px;
 }
+.pm,.chat-room-msg{
+  padding-bottom: 10px;
+  display: block;
+}
+.pm:hover,.chat-room-msg:hover{
+  border: 1px solid green;
+  color:pink;
+}
 
+/*===================================================================*/
+/*========================= Side Nav Find user ======================*/
+/*===================================================================*/
+.find-user,.pm-box,.chat-room{
+  max-height: 25%;
+  overflow: scroll;
+}
 
+.find-user{
+  border: 1px solid green;
+}
+.close-btn{
+  cursor: pointer;
+  
+}
 
 
 
