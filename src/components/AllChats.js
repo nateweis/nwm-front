@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Messages from './Messages'
 import FindUsers from './FindUsers'
 import NewChat from './NewChat'
+import Profile from './Profile'
 
 class AllChats extends Component {
   constructor(props) {
@@ -102,19 +103,28 @@ class AllChats extends Component {
   render(){
     return(
       <div className="all-chats">
-          <div className="top"> <NewChat
+          <div className="top">
+
+          <Profile
+          currentUser={this.props.currentUser}
+          />
+
+          <NewChat
             getChats={this.props.getChats}
             getContacts={this.props.getContacts}
             friends={this.props.friends}
             id={this.props.currentUser.id}
             room={this.state.room.chat}
           />
+
           <span className="close-btn" onClick={this.logout}> Logout </span>
         </div>
 
         <div className="flex-container">
           <div className="left-side">
             <div className="chat-room">
+            <h3>Welcome {this.props.currentUser.username}</h3>
+            <hr/>
               <h3>Chat Rooms</h3>
                 {this.state.chats? this.state.chats.map((chat,index) => {
                   return(

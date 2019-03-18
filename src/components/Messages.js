@@ -215,6 +215,25 @@ class Messages extends Component {
       user:member,
       chat:this.state.chat.chat_id
     }
+    this.removePersonFromChat(obj)
+    this.setState((pre) => {
+      pre.participants.splice(index,1)
+      return{participants:pre.participants}
+    })
+  }
+
+  // leave Chat
+  leaveChat = () => {
+    const obj = {
+      user: this.props.currentUser.id,
+      chat:this.state.chat.chat_id
+    }
+    this.removePersonFromChat(obj)
+    this.props.rmChat("chats", this.props.chatIndex)
+  }
+
+  // remove a person from current chats
+  removePersonFromChat = (obj) => {
     fetch('http://localhost:3000/chats/remove/member',{
       method:'DELETE',
       body:JSON.stringify(obj),
@@ -227,16 +246,11 @@ class Messages extends Component {
       res.json()
       .then((data) => {
         console.log(data);
-        this.setState((pre) => {
-          pre.participants.splice(index,1)
-          return{participants:pre.participants}
-        })
       },(err) => {
         console.log(err);
         console.log("couldnt remove person from chat frontend");
       })
     })
-
   }
 
   // user can edit any of there messages
@@ -322,7 +336,7 @@ class Messages extends Component {
               <button onClick={this.chatRename}>Rename Chat</button>
               <button onClick={this.warning}>Remove Chat</button>
               {/* shows group members (4everyone) */}
-              <button>Leave Chat</button>
+              <button onClick={this.leaveChat}>Leave Chat</button>
               <h4>Participants in "{this.state.chat.chat}" Room</h4>
               {this.state.participants.map((member, index) => {
                 return(
@@ -392,7 +406,9 @@ class Messages extends Component {
                   <div className={message.user_id === this.props.currentUser.id?
                     "message message-user" :"message"} key={index}>
 
-                    <div className="avatar"> <img src="default-user.png" /> </div>
+                    <div className="avatar">
+                    <img src={message.pic? message.pic :"default-user.png"} />
+                     </div>
 
                     <div className="msg">
                       <div className="pointer"> </div>
