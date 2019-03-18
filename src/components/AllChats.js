@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Messages from './Messages'
 import FindUsers from './FindUsers'
 import NewChat from './NewChat'
+import Profile from './Profile'
 
 class AllChats extends Component {
   constructor(props) {
@@ -102,37 +103,55 @@ class AllChats extends Component {
   render(){
     return(
       <div className="all-chats">
-          <div className="top"> <NewChat
+          <div className="top">
+
+          <Profile
+          currentUser={this.props.currentUser}
+          />
+
+          <NewChat
             getChats={this.props.getChats}
             getContacts={this.props.getContacts}
             friends={this.props.friends}
             id={this.props.currentUser.id}
+            room={this.state.room.chat}
           />
-          <span onClick={this.logout}> Logout </span>
+
+          <span className="close-btn" onClick={this.logout}> Logout </span>
         </div>
 
         <div className="flex-container">
           <div className="left-side">
-            <h2>Chat Rooms</h2>
-              {this.state.chats? this.state.chats.map((chat,index) => {
-                return(
-                  <span key={index}>
-                  <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
-                  </span>
-                )
-              }): "Loading....."}
+            <div className="chat-room">
+            <h3>Welcome {this.props.currentUser.username}</h3>
+            <hr/>
+              <h3>Chat Rooms</h3>
+                {this.state.chats? this.state.chats.map((chat,index) => {
+                  return(
+                    <span className={chat.chat_id === this.props.currentUser.current_room?
+                       "active chat-room-msg" :'chat-room-msg'}
+                     key={index}>
+                    <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
+                    </span>
+                  )
+                }): "Loading....."}
+            </div>
+
 
               <FindUsers addToArr={this.props.addToArr}
               currentUser={this.props.currentUser}/>
 
-              <h2>Private Message</h2>
-              {this.props.friends? this.props.friends.map((friend,index) => {
-                return(
-                  <span key={index}>
-                    <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
-                  </span>
-                )
-              }): "Loading....."}
+              <div className="pm-box">
+                <h3>Private Message</h3>
+                {this.props.friends? this.props.friends.map((friend,index) => {
+                  return(
+                    <span className="pm" key={index}>
+                      <li onClick={()=> this.makePrivateRoom(friend.contact_id)}>{friend.username}</li>
+                    </span>
+                  )
+                }): "Loading....."}
+              </div>
+
           </div>
 
 

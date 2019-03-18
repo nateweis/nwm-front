@@ -46,6 +46,7 @@ class NewChat extends Component {
   render(){
     return(
       <>
+
       <form onSubmit={this.handleSubmit}>
         <input
         type="text"
@@ -56,6 +57,7 @@ class NewChat extends Component {
         />
         <input type="submit" value="Add Chat"/>
       </form>
+      <h3>{this.props.room? this.props.room: ""}</h3>
       </>
     )
   }

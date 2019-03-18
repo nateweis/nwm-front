@@ -57,7 +57,7 @@ class FindUsers extends Component {
 
   render(){
     return(
-      <>
+      <div className="find-user">
       <form onSubmit={this.handleSubmit}>
         <input type='text' placeholder="find user"
           value={this.state.username} name='username'
@@ -66,7 +66,7 @@ class FindUsers extends Component {
         <input type="submit"/>
       </form>
       {this.state.users? <span>
-          <span onClick={this.closeUsers}>
+          <span onClick={this.closeUsers} className="close-btn">
           Close
           </span>
           {this.state.users.info.map((user,index) => {
@@ -80,7 +80,7 @@ class FindUsers extends Component {
             )
           })}
         </span>:""}
-      </>
+      </div>
     )
   }
 }
