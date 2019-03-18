@@ -136,18 +136,29 @@ form{
 /*===================================================================*/
 /*====================== Message Options  ===========================*/
 /*===================================================================*/
-.addFriend{
-  border: 1px solid orange;
+.friend-que{
+  border: 2px solid gold;
+  display: flex;
+
 }
-.addedFriend{
+.addFriend,.addedFriend{
   border: 1px solid orange;
+  width:50%;
 }
+
 .options{
   /* border: 1px solid orange; */
-  max-width: 20%;
   position: fixed;
   right: 0;
+  color: #eee;
+}
+.options-menu{
   background-color: rgba(0, 0, 0, 0.5);
+  width: 75%;
+}
+.options h4{
+  color: #032254;
+  text-align: center;
 }
 .option-btn{
   float: right;

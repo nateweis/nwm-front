@@ -308,7 +308,7 @@ class Messages extends Component {
   render(){
     return(
       <div className="center">
-        <div className="options">
+        <div className={this.state.options? "options options-menu":"options"}>
         {/*==================================================
                       The header and option buttons
           ==================================================*/}
@@ -339,19 +339,31 @@ class Messages extends Component {
                     The from to add friends to the chatroom
               ==================================================*/}
 
-          {this.state.form? <div>
+          {this.state.form? <div className="friend-que">
               <div className="addFriend">
-              <span onClick={this.closeForm}>X</span>
+              <h4>Available Friends to Add</h4>
+              <span onClick={this.closeForm}>X</span> <br/>
               {this.props.friends.map((friend,index) => {
-                return(
-                  <span key={index}>
-                  {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
-                  <br/>
-                  </span>
-                )
+                let onList = false
+                for(let i = 0; i < this.state.participants.length; i++){
+                  if(this.state.participants[i].username === friend.username){
+                    onList = true
+                  }
+                }
+                if(onList === false){
+                  return(
+                    <span key={index}>
+                    {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                    <br/>
+                    </span>
+                  )
+                }else{return('')}
+
               })}
+
               </div>
               <div className="addedFriend">
+              <h4>Friends To Be Added</h4>
                 <button onClick={this.handleSubmit}>Submit</button>
                 {this.state.friendName.map((friend,index) => {
                   return(
