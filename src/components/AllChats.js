@@ -107,6 +107,7 @@ class AllChats extends Component {
             getContacts={this.props.getContacts}
             friends={this.props.friends}
             id={this.props.currentUser.id}
+            room={this.state.room.chat}
           />
           <span onClick={this.logout}> Logout </span>
         </div>

@@ -292,80 +292,96 @@ class Messages extends Component {
   render(){
     return(
       <div className="center">
-      {/*==================================================
-                    The header and option buttons
-        ==================================================*/}
-        <h3>Messages for {this.state.chat? this.state.chat.chat: '.....' } Room</h3>
-        {/* option button for now just for admin need to make for everyone*/}
-        {this.state.chat.admin? <button onClick={this.optionMenu}>Options</button> : ''}
-        {this.state.chat? this.state.options? <div>
-          {/* add frinds to chat (just for admin) */}
-            <button onClick={this.addFriends}>Add Friends to the Chat</button>
-            {/* rename/delte chat (just for admin) */}
-            <button onClick={this.chatRename}>Rename Chat</button>
-            <button onClick={this.warning}>Remove Chat</button>
-            {/* shows group members (4everyone) */}
-            <h4>Participants in "{this.state.chat.chat}" Room</h4>
-            {this.state.participants.map((member, index) => {
-              return(
-                <div key={index}>
-                  <li>{member.username}
-                  {this.state.chat.admin? member.id !== this.props.currentUser.id?
-                    <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
-                  </li>
-                </div>
-              )
-            })}
-          </div> :"" :""}
+        <div className="options">
+        {/*==================================================
+                      The header and option buttons
+          ==================================================*/}
 
-          {/*==================================================
-                  The from to add friends to the chatroom
-            ==================================================*/}
+          {/* option button for now just for admin need to make for everyone*/}
+          {this.state.chat.admin? <button className="option-btn" onClick={this.optionMenu}>Options</button> : ''}
+          {this.state.chat? this.state.options? <div>
+            {/* add frinds to chat (just for admin) */}
+              <button onClick={this.addFriends}>Add Friends to the Chat</button>
+              {/* rename/delte chat (just for admin) */}
+              <button onClick={this.chatRename}>Rename Chat</button>
+              <button onClick={this.warning}>Remove Chat</button>
+              {/* shows group members (4everyone) */}
+              <h4>Participants in "{this.state.chat.chat}" Room</h4>
+              {this.state.participants.map((member, index) => {
+                return(
+                  <div key={index}>
+                    <li>{member.username}
+                    {this.state.chat.admin? member.id !== this.props.currentUser.id?
+                      <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
+                    </li>
+                  </div>
+                )
+              })}
+            </div> :"" :""}
 
-        {this.state.form? <div>
-            <div className="addFriend">
-            {this.props.friends.map((friend,index) => {
-              return(
-                <span key={index}>
-                {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
-                <span onClick={this.closeForm}>X</span>
-                <br/>
-                </span>
-              )
-            })}
-            </div>
-            <div className="addedFriend">
-              <button onClick={this.handleSubmit}>Submit</button>
-              {this.state.friendName.map((friend,index) => {
+            {/*==================================================
+                    The from to add friends to the chatroom
+              ==================================================*/}
+
+          {this.state.form? <div>
+              <div className="addFriend">
+              <span onClick={this.closeForm}>X</span>
+              {this.props.friends.map((friend,index) => {
                 return(
                   <span key={index}>
-                  {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
+                  {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                  <br/>
                   </span>
                 )
               })}
-            </div>
+              </div>
+              <div className="addedFriend">
+                <button onClick={this.handleSubmit}>Submit</button>
+                {this.state.friendName.map((friend,index) => {
+                  return(
+                    <span key={index}>
+                    {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
+                    </span>
+                  )
+                })}
+              </div>
 
-          </div>
-        :""}
+            </div>
+          :""}
+        </div>
+
 
         {/*==================================================
                       The actual chat messages
           ==================================================*/}
 
-        <div className="messages">
+        <div className="chat-screen">
           {this.props.messages.map((message, index) => {
             if(message.chat_id === this.props.currentUser.current_room){
               return(
 
-                  <div className="message" key={index}>
-                  <strong>
-                  {message.user_id === this.props.currentUser.id? "You" : message.sender}
-                  </strong>  :<br/> {message.message}
+                  <div className={message.user_id === this.props.currentUser.id?
+                    "message message-user" :"message"} key={index}>
 
-                  {message.user_id === this.props.currentUser.id? <span>
-                  <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
-                   <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
-                   </span>:''}
+                    <div className="avatar"> <img src="default-user.png" /> </div>
+
+                    <div className="msg">
+                      <div className="pointer"> </div>
+                      <div className="inner-msg">
+                        <strong>
+                        {message.user_id === this.props.currentUser.id? "You" : message.sender}
+                        </strong>
+
+                         <br/> {message.message}
+                      </div>
+
+                      {message.user_id === this.props.currentUser.id? <span className="message-btn">
+                      <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
+                       <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
+                       </span>:''}
+
+                    </div>
+
 
                   </div>
 
