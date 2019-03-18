@@ -89,10 +89,11 @@ form{
   border-radius: 50%;
 }
 .message .avatar{
-  margin-right: 1rem;
+  margin-right: .5rem;
 }
 .message-user .avatar{
   margin-right: 0;
+  margin-left: .5rem;
 }
 .msg{
   display: flex;
@@ -162,6 +163,21 @@ form{
 .top > *{
   margin: auto;
 }
+
+/*===================================================================*/
+/*============================= Side Nav  ===========================*/
+/*===================================================================*/
+.active{
+  border:1px solid lightgreen;
+}
+.left-side h3{
+  text-align: center;
+}
+.left-side li{
+  list-style: none;
+  padding-left: 15px;
+}
+
 
 
 

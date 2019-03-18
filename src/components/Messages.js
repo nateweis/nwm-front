@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 
 class Messages extends Component {
   constructor(props) {
@@ -13,6 +14,21 @@ class Messages extends Component {
       edit:''
     }
   }
+
+  // autoscroll only when on bottom
+  componentWillUpdate(){
+    const node = ReactDOM.findDOMNode(this)
+    this.shouldScrollToBottom = node.scrollTop + node.clientHeight >= node.scrollHeight
+  }
+
+  // if on bottom autoscroll
+  componentDidUpdate(){
+    // if(this.shouldScrollToBottom){
+      const node = ReactDOM.findDOMNode(this)
+      node.scrollTop = node.scrollHeight
+    // }
+  }
+
   static getDerivedStateFromProps(props, state){
     if(!(state.chat && props.chat )|| state.chat.chat !== props.chat.chat){
       return{chat: props.chat}

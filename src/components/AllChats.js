@@ -114,11 +114,12 @@ class AllChats extends Component {
 
         <div className="flex-container">
           <div className="left-side">
-            <h2>Chat Rooms</h2>
+            <h3>Chat Rooms</h3>
               {this.state.chats? this.state.chats.map((chat,index) => {
                 return(
                   <span key={index}>
-                  <li onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
+                  <li className={chat.chat_id === this.props.currentUser.current_room? "active" :''}
+                  onClick={()=>this.changeChat(chat,index)}>{chat.chat}</li>
                   </span>
                 )
               }): "Loading....."}
@@ -126,7 +127,7 @@ class AllChats extends Component {
               <FindUsers addToArr={this.props.addToArr}
               currentUser={this.props.currentUser}/>
 
-              <h2>Private Message</h2>
+              <h3>Private Message</h3>
               {this.props.friends? this.props.friends.map((friend,index) => {
                 return(
                   <span key={index}>
