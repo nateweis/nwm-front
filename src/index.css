@@ -13,6 +13,7 @@ button, input[type="submit"]{
 .all-chats{
   border: 1px solid gold;
   height: 100vh;
+  background: linear-gradient(#30476d,rgb(5, 29, 66));
 }
 .left-side,.center{
   height: 90vh;
@@ -30,17 +31,20 @@ button, input[type="submit"]{
   border: 1px solid pink;
   width: 75%;
   overflow: scroll;
-  background-color: silver;
+  background: url('background.jpg') center no-repeat;
+  background-size: cover;
 }
 
 .top{
   border: 1px solid lightgreen;
   display: flex;
+  color: #eee;
 }
 .flex-container{
   border: 1px solid purple;
   display: flex;
-  background-color:#30476d;
+  background: linear-gradient(rgba(45,68,109,.9),rgba(5, 29, 66,.9)), url('side.jpeg') center no-repeat;
+  background-size: cover;
 }
 form{
   /* border: 1px solid black; */
@@ -214,7 +218,7 @@ form{
 }
 .close-btn{
   cursor: pointer;
-  
+
 }
 
 
