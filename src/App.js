@@ -54,7 +54,8 @@ class App extends Component {
   getUser = () => {
     fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'GET',
-      credentials: 'include'
+      credentials: 'include',
+      mode:'no-cors'
     })
     .then((res) => {
       res.json()
@@ -70,7 +71,7 @@ class App extends Component {
   }
 
   getContacts = () => {
-    fetch('https://nwm-backend.herokuapp.com//users/contacts/'+ this.state.currentUser.id)
+    fetch('https://nwm-backend.herokuapp.com/users/contacts/'+ this.state.currentUser.id)
     .then((res) => {
       res.json()
       .then((data) => {
