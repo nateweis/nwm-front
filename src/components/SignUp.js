@@ -39,15 +39,15 @@ class SignUp extends Component {
   render(){
     return(
       <>
-      <form onSubmit={this.handleSubmit}>
-        Sign Up:
+      <form className="login-box" onSubmit={this.handleSubmit}>
+      <h2>Sign Up</h2>
         <input type="text" placeholder="username"
         value={this.state.username} name="username"
         onChange={this.handleChange}/>
         <input type="password" placeholder="password"
         value={this.state.password} name="password"
         onChange={this.handleChange}/>
-        <input type="submit"/>
+        <input type="submit" value="Sign Up"/>
       </form>
       </>
     )

@@ -32,7 +32,7 @@ class Login extends Component {
           username:'',
           password:''
         })
-        
+
         this.props.getUser()
       },(err) => {
         console.log(err);
@@ -44,15 +44,15 @@ class Login extends Component {
   render(){
     return(
       <>
-      <form onSubmit={this.handleSubmit}>
-        Login:
+      <form className="login-box" onSubmit={this.handleSubmit}>
+      <h2>Login</h2>
         <input type="text" placeholder="username"
         value={this.state.username} name="username"
         onChange={this.handleChange}/>
         <input type="password" placeholder="password"
         value={this.state.password} name="password"
         onChange={this.handleChange}/>
-        <input type="submit"/>
+        <input type="submit" value="Login"/>
       </form>
       </>
     )

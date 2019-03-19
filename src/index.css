@@ -14,7 +14,7 @@ button, input[type="submit"]{
   border: 1px solid gold;
   height: 100vh;
 
-  background: linear-gradient(rgba(45,68,109,.9),rgba(2, 25, 61,.9)), url('side.jpeg');
+  background: linear-gradient(rgba(45,68,109,.9),rgba(1, 7, 30,.9)), url('side.jpeg');
 }
 .left-side,.center{
   height: 90vh;
@@ -224,6 +224,70 @@ form{
 /*===================================================================*/
 /*============================ Login/Sigup ==========================*/
 /*===================================================================*/
+.opening-box{
+  position: absolute;
+  top:30%;
+  left:50%;
+  background: #191919;
+  text-align: center;
+  color: #eee;
+  transform: translate(-50%,-50%);
+}
+.login-btn{
+  display: flex;
+  margin-top: 0;
+  justify-content: space-around;
+  border: 1px solid white;
+}
+.login-btn span{
+  border: 1px solid red;
+  padding: 5px;
+  width: 50%;
+}
+.login-box{
+  padding: 40px;
+  width: 300px;
+}
+.login-box h2{
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+.login-box input[type="text"], .login-box input[type="password"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #eee;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: #eee;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.login-box input[type="text"]:focus, .login-box input[type="password"]:focus{
+  width: 280px;
+  border-color: #3498db;
+}
+.login-box input[type="submit"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 40px;
+  outline: none;
+  color: #eee;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.login-box input[type="submit"]:hover{
+  background-color: #3498db;
+}
+
 
 
 
