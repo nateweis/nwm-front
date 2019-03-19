@@ -54,8 +54,7 @@ class App extends Component {
   getUser = () => {
     fetch('https://nwm-backend.herokuapp.com/sessions',{
       method:'GET',
-      credentials: 'include',
-      mode:'no-cors'
+      credentials: 'include'
     })
     .then(res => res.json())
       .then((data) => {
