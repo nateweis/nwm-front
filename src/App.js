@@ -12,12 +12,11 @@ class App extends Component {
      currentUser:{},
      messages:[],
      leave:'',
-     friends:[]
+     friends:[],
+     signup:true
     }
   }
-
-  socket = io.connect('https://nwm-backend.herokuapp.com');
-
+  socket = io.connect('http://localhost:3000');
 
   changeRoom = (chat) => {
     // leave old room
@@ -53,10 +52,9 @@ class App extends Component {
   }
 
   getUser = () => {
-    fetch('https://nwm-backend.herokuapp.com/sessions',{
+    fetch('http://localhost:3000/sessions',{
       method:'GET',
-      credentials: 'include',
-       mode: 'no-cors'
+      credentials: 'include'
     })
     .then((res) => {
       res.json()
@@ -72,9 +70,7 @@ class App extends Component {
   }
 
   getContacts = () => {
-    fetch('https://nwm-backend.herokuapp.com/users/contacts/'+ this.state.currentUser.id,{
-       mode: 'no-cors'
-    })
+    fetch('http://localhost:3000/users/contacts/'+ this.state.currentUser.id)
     .then((res) => {
       res.json()
       .then((data) => {
@@ -88,7 +84,7 @@ class App extends Component {
   }
 
   getChats = () => {
-    fetch('https://nwm-backend.herokuapp.com/chats/'+ this.state.currentUser.id)
+    fetch('http://localhost:3000/chats/'+ this.state.currentUser.id)
     .then((res) => {
         res.json()
         .then((data) => {
@@ -104,8 +100,8 @@ class App extends Component {
   }
 
   getChatInfo = () => {
-    // fetch the chats info based on the room you are in
-    fetch('https://nwm-backend.herokuapp.com/messages')
+    // fethch the chats info based on the room you are in
+    fetch('http://localhost:3000/messages')
     .then((res) => {
       // populate the message state with the info
       res.json()
@@ -119,7 +115,7 @@ class App extends Component {
   }
 
   updateCurrentRoom = (chat) => {
-    fetch('https://nwm-backend.herokuapp.com/users/changeRoom',{
+    fetch('http://localhost:3000/users/changeRoom',{
       method:'PUT',
       body:JSON.stringify(chat),
       headers:{
@@ -179,6 +175,12 @@ class App extends Component {
       this.setState({messages:[...this.state.messages,msg]})
     })
   }
+  log = () => {
+    this.setState({signup:false})
+  }
+  sign = () => {
+    this.setState({signup:true})
+  }
 
 
   render() {
@@ -191,9 +193,11 @@ class App extends Component {
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
         addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
         removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
-        <div>
-        <SignUp />
-        <Login getUser={this.getUser} />
+        <div className="opening-box">
+
+          <span onClick={this.sign}>Sign Up</span><span onClick={this.log}>Login</span>
+          {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
+
         </div>
       }
       </div>
