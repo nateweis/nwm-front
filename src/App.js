@@ -57,17 +57,16 @@ class App extends Component {
       credentials: 'include',
       mode:'no-cors'
     })
-    .then((res) => {
-      res.json()
+    .then(res => res.json())
       .then((data) => {
         console.log(data);
         this.setState({currentUser:data})
         this.getContacts()
         this.setState({logedin:true})
-      },(err) => {
+      })
+      .catch((err) => {
         console.log(err);
       })
-    })
   }
 
   getContacts = () => {
