@@ -13,7 +13,8 @@ button, input[type="submit"]{
 .all-chats{
   border: 1px solid gold;
   height: 100vh;
-  background: linear-gradient(#30476d,rgb(5, 29, 66));
+
+  background: linear-gradient(rgba(45,68,109,.9),rgba(2, 25, 61,.9)), url('side.jpeg');
 }
 .left-side,.center{
   height: 90vh;
@@ -43,8 +44,8 @@ button, input[type="submit"]{
 .flex-container{
   border: 1px solid purple;
   display: flex;
-  background: linear-gradient(rgba(45,68,109,.9),rgba(5, 29, 66,.9)), url('side.jpeg') center no-repeat;
-  background-size: cover;
+  /* background: linear-gradient(#30476d,rgb(5, 29, 66)); */
+
 }
 form{
   /* border: 1px solid black; */
@@ -220,6 +221,9 @@ form{
   cursor: pointer;
 
 }
+/*===================================================================*/
+/*============================ Login/Sigup ==========================*/
+/*===================================================================*/
 
 
 

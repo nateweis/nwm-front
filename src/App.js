@@ -12,7 +12,8 @@ class App extends Component {
      currentUser:{},
      messages:[],
      leave:'',
-     friends:[]
+     friends:[],
+     signup:true
     }
   }
   socket = io.connect('http://localhost:3000');
@@ -174,6 +175,12 @@ class App extends Component {
       this.setState({messages:[...this.state.messages,msg]})
     })
   }
+  log = () => {
+    this.setState({signup:false})
+  }
+  sign = () => {
+    this.setState({signup:true})
+  }
 
 
   render() {
@@ -186,9 +193,11 @@ class App extends Component {
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
         addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
         removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
-        <div>
-        <SignUp />
-        <Login getUser={this.getUser} />
+        <div className="opening-box">
+
+          <span onClick={this.sign}>Sign Up</span><span onClick={this.log}>Login</span>
+          {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
+
         </div>
       }
       </div>
