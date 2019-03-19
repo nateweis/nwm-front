@@ -228,7 +228,7 @@ form{
   position: absolute;
   top:30%;
   left:50%;
-  background: #191919;
+  background: rgba(25,25,25,.8);
   text-align: center;
   color: #eee;
   transform: translate(-50%,-50%);
@@ -237,12 +237,18 @@ form{
   display: flex;
   margin-top: 0;
   justify-content: space-around;
-  border: 1px solid white;
+  background: rgb(89, 105, 130);
+  
+
 }
 .login-btn span{
-  border: 1px solid red;
   padding: 5px;
   width: 50%;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.selected{
+  background: rgba(25,25,25,.8);
 }
 .login-box{
   padding: 40px;
@@ -286,6 +292,11 @@ form{
 }
 .login-box input[type="submit"]:hover{
   background-color: #3498db;
+}
+.opening-page{
+  width: 100vw;
+  height: 100vh;
+  background: rgb(89, 105, 130);
 }
 
 

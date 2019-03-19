@@ -196,7 +196,10 @@ class App extends Component {
         <div className="opening-page">
           <div className="opening-box">
             <div className="login-btn">
-              <span onClick={this.sign}>Sign Up</span><span onClick={this.log}>Login</span>
+              <span onClick={this.sign} className={this.state.signup? "selected":""}
+              >Sign Up</span>
+              <span onClick={this.log} className={this.state.signup? "":"selected"}
+              >Login</span>
             </div>
             <div>
               {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
