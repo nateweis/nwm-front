@@ -13,7 +13,6 @@ button, input[type="submit"]{
 .all-chats{
   border: 1px solid gold;
   height: 100vh;
-
   background: linear-gradient(rgba(45,68,109,.9),rgba(1, 7, 30,.9)), url('side.jpeg');
 }
 .left-side,.center{
@@ -68,12 +67,11 @@ form{
   margin-left: 3%;
 }
 .message-btn{
-  position:absolute;
-  right: 60%;
+  position:relative;
   display: none;
 }
 .message:hover .message-btn{
-  /* display: inline; */
+  display: inline;
 }
 .chat-screen{
   display: flex;
@@ -106,6 +104,7 @@ form{
 .msg{
   display: flex;
   justify-content: space-between;
+  min-width: 200px;
 }
 .msg .pointer{
   width: 0;
@@ -238,7 +237,7 @@ form{
   margin-top: 0;
   justify-content: space-around;
   background: rgb(89, 105, 130);
-  
+
 
 }
 .login-btn span{
@@ -298,7 +297,25 @@ form{
   height: 100vh;
   background: rgb(89, 105, 130);
 }
-
+/*===================================================================*/
+/*=============================== Modual ============================*/
+/*===================================================================*/
+.modual{
+  width: 300px;
+  min-height: 100px;
+  padding: 30px;
+  position: fixed;
+  top:50%;
+  left:50%;
+  z-index: 3;
+  transform: translate(-50%,-50%);
+  background: rgb(89, 105, 130);
+  color:#eee;
+}
+.modual span{
+  margin-right: 30px;
+  cursor: pointer;
+}
 
 
 

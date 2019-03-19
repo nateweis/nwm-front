@@ -269,6 +269,10 @@ class Messages extends Component {
     })
   }
 
+  closeEditOneMessage =() => {
+    this.setState({editMessage:false})
+  }
+
   handleMessageEdit = (e) => {
     this.setState({edit:e.target.value})
   }
@@ -334,13 +338,16 @@ class Messages extends Component {
           ==================================================*/}
 
           {/* option button for now just for admin need to make for everyone*/}
-          {this.state.chat.admin? <button className="option-btn" onClick={this.optionMenu}>Options</button> : ''}
+          <button className="option-btn" onClick={this.optionMenu}>Options</button>
           {this.state.chat? this.state.options? <div>
             {/* add frinds to chat (just for admin) */}
-              <button onClick={this.addFriends}>Add Friends to the Chat</button>
+              {this.state.chat.admin?  <button onClick={this.addFriends}>Add Friends to the Chat</button>: ''}
+
               {/* rename/delte chat (just for admin) */}
-              <button onClick={this.chatRename}>Rename Chat</button>
-              <button onClick={this.warning}>Remove Chat</button>
+              {this.state.chat.admin?  <button onClick={this.chatRename}>Rename Chat</button>: ''}
+              {this.state.chat.admin? <button onClick={this.warning}>Remove Chat</button> : ''}
+
+
               {/* shows group members (4everyone) */}
               <button onClick={this.leaveChat}>Leave Chat</button>
               <h4>Participants in "{this.state.chat.chat}" Room</h4>
@@ -419,6 +426,12 @@ class Messages extends Component {
                     <div className="msg">
                       <div className="pointer"> </div>
                       <div className="inner-msg">
+
+                      {message.user_id === this.props.currentUser.id? <span className="message-btn">
+                      <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
+                       <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
+                       </span>:''}
+
                         <strong>
                         {message.user_id === this.props.currentUser.id? "You" : message.sender}
                         </strong>
@@ -426,10 +439,7 @@ class Messages extends Component {
                          <br/> {message.message}
                       </div>
 
-                      {message.user_id === this.props.currentUser.id? <span className="message-btn">
-                      <button onClick={()=>this.editOneMessage(message,index)}>Edit</button>
-                       <button onClick={()=>this.removeOneMessage(message,index)}>Remove</button>
-                       </span>:''}
+
 
                     </div>
 
@@ -462,7 +472,7 @@ class Messages extends Component {
       A modual that pops up to give warning before deleting a chat
           ==================================================*/}
 
-        {this.state.warning? <div className="warning-model">
+        {this.state.warning? <div className="modual warning-model">
             <p>Are you sure you want to delete
             {this.state.chat.chat} chat room?</p>
             <button onClick={this.cancelNuke}>No</button> <button onClick={this.nukeChat}>Yes</button>
@@ -471,7 +481,7 @@ class Messages extends Component {
           {/*==================================================
                       A modual for renaming the chat
             ==================================================*/}
-          {this.state.chatRename? <div className='rename-chat'>
+          {this.state.chatRename? <div className='modual rename-chat'>
               <h4>Rename Chat</h4>
               <form onSubmit={this.submitNewName}>
                 <input type='text'
@@ -486,7 +496,8 @@ class Messages extends Component {
                   A modual for editing your message
             ==================================================*/}
           {this.state.editMessage?
-              <form onSubmit={this.editMessageSubmit}>
+              <form className='modual' onSubmit={this.editMessageSubmit}>
+              <span onClick={this.closeEditOneMessage} >Close</span>
                 <input
                   type="text"
                   value={this.state.edit}
