@@ -17,16 +17,18 @@ class Messages extends Component {
 
   // autoscroll only when on bottom
   componentWillUpdate(){
+    console.log("did i go off?");
     const node = ReactDOM.findDOMNode(this)
     this.shouldScrollToBottom = node.scrollTop + node.clientHeight >= node.scrollHeight
   }
 
   // if on bottom autoscroll
   componentDidUpdate(){
-    // if(this.shouldScrollToBottom){
+    // console.log(this.shouldScrollToBottom);
+    if(this.shouldScrollToBottom){
       const node = ReactDOM.findDOMNode(this)
       node.scrollTop = node.scrollHeight
-    // }
+    }
   }
 
   static getDerivedStateFromProps(props, state){
@@ -83,7 +85,9 @@ class Messages extends Component {
 
   // typing in the message box
   handleChange = (e) => {
+    const node = ReactDOM.findDOMNode(this)
     this.setState({newMsg:e.target.value})
+    this.shouldScrollToBottom = node.scrollTop + node.clientHeight >= node.scrollHeight
   }
   // submitting the message to the chat
   submit = (e) => {
@@ -96,6 +100,8 @@ class Messages extends Component {
     }
     this.props.socket(obj)
     this.setState({newMsg:''})
+    const node = ReactDOM.findDOMNode(this)
+    this.shouldScrollToBottom = node.scrollTop + node.clientHeight >= node.scrollHeight
   }
 
   // closes the add friend form without adding anyone
