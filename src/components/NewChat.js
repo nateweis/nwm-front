@@ -57,7 +57,7 @@ class NewChat extends Component {
         />
         <input type="submit" value="Add Chat"/>
       </form>
-      <h3>{this.props.room? this.props.room: ""}</h3>
+      <h3 className="welcome">{this.props.room? this.props.room: ""}</h3>
       </>
     )
   }

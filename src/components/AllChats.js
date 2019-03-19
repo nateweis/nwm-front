@@ -123,7 +123,7 @@ class AllChats extends Component {
         <div className="flex-container">
           <div className="left-side">
             <div className="chat-room">
-            <h3>Welcome {this.props.currentUser.username}</h3>
+            <h3 className="welcome">Welcome {this.props.currentUser.username}</h3>
             <hr/>
               <h3>Chat Rooms</h3>
                 {this.state.chats? this.state.chats.map((chat,index) => {

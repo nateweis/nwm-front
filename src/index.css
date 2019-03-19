@@ -3,6 +3,7 @@ html,body{
   padding: 0;
   height: 100%;
   width:100%;
+  font-family: 'Montserrat', sans-serif;
 }
 button, input[type="submit"]{
   cursor: pointer;
@@ -185,6 +186,9 @@ form{
 /*===================================================================*/
 /*============================= Side Nav  ===========================*/
 /*===================================================================*/
+.welcome{
+  font-family: 'Cinzel', serif;
+}
 .active{
   border:1px solid lightgreen;
   color:pink;
