@@ -25,6 +25,7 @@ class SignUp extends Component {
       mode:'no-cors'
     })
     .then((res) => {
+      console.log(res);
       res.json()
       .then((data) => {
         console.log(data);
