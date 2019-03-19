@@ -58,7 +58,7 @@ class App extends Component {
       mode:'no-cors'
     })
     .then((res) => {
-      res.json()})
+      res.json()
       .then((data) => {
         console.log(data);
         this.setState({currentUser:data})
@@ -66,7 +66,8 @@ class App extends Component {
         this.setState({logedin:true})
       },(err) => {
         console.log(err);
-      })  
+      })
+    })
   }
 
   getContacts = () => {
