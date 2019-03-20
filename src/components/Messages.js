@@ -341,22 +341,22 @@ class Messages extends Component {
           <button className="option-btn" onClick={this.optionMenu}>Options</button>
           {this.state.chat? this.state.options? <div>
             {/* add frinds to chat (just for admin) */}
-              {this.state.chat.admin?  <button onClick={this.addFriends}>Add Friends to the Chat</button>: ''}
+              {this.state.chat.admin?  <button className="user-btn" onClick={this.addFriends}>Add Friends to the Chat</button>: ''}
 
               {/* rename/delte chat (just for admin) */}
-              {this.state.chat.admin?  <button onClick={this.chatRename}>Rename Chat</button>: ''}
-              {this.state.chat.admin? <button onClick={this.warning}>Remove Chat</button> : ''}
+              {this.state.chat.admin?  <button className="user-btn"  onClick={this.chatRename}>Rename Chat</button>: ''}
+              {this.state.chat.admin? <button className="user-btn"  onClick={this.warning}>Remove Chat</button> : ''}
 
 
               {/* shows group members (4everyone) */}
-              <button onClick={this.leaveChat}>Leave Chat</button>
+              <button className="user-btn"  onClick={this.leaveChat}>Leave Chat</button>
               <h4>Participants in "{this.state.chat.chat}" Room</h4>
               {this.state.participants.map((member, index) => {
                 return(
                   <div key={index}>
                     <li>{member.username}
                     {this.state.chat.admin? member.id !== this.props.currentUser.id?
-                      <button onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
+                      <button className="kick-btn" onClick={()=> this.kickOutOfChat(member.id,index)}>Kick From Chat</button> : "":""}
                     </li>
                   </div>
                 )
@@ -370,7 +370,7 @@ class Messages extends Component {
           {this.state.form? <div className="friend-que">
               <div className="addFriend">
               <h4>Available Friends to Add</h4>
-              <span onClick={this.closeForm}>X</span> <br/>
+              <span className="close-btn" onClick={this.closeForm}>X</span> <br/>
               {this.props.friends.map((friend,index) => {
                 let onList = false
                 for(let i = 0; i < this.state.participants.length; i++){
@@ -381,7 +381,7 @@ class Messages extends Component {
                 if(onList === false){
                   return(
                     <span key={index}>
-                    {friend.username} <button onClick={()=> this.addList(friend)}>+</button>
+                    {friend.username} <button className="plus" onClick={()=> this.addList(friend)}>+</button>
                     <br/>
                     </span>
                   )
@@ -396,7 +396,7 @@ class Messages extends Component {
                 {this.state.friendName.map((friend,index) => {
                   return(
                     <span key={index}>
-                    {friend} <span onClick={()=>this.pop(index)}>  X</span><br/>
+                    {friend} <span className="close-btn" onClick={()=>this.pop(index)}>  X</span><br/>
                     </span>
                   )
                 })}
