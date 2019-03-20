@@ -12,7 +12,8 @@ class App extends Component {
      currentUser:{},
      messages:[],
      leave:'',
-     friends:[]
+     friends:[],
+     signup:true
     }
   }
   socket = io.connect('https://nwm-backend.herokuapp.com');
@@ -174,6 +175,12 @@ class App extends Component {
       this.setState({messages:[...this.state.messages,msg]})
     })
   }
+  log = () => {
+    this.setState({signup:false})
+  }
+  sign = () => {
+    this.setState({signup:true})
+  }
 
 
   render() {
@@ -186,9 +193,18 @@ class App extends Component {
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
         addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
         removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
-        <div>
-        <SignUp />
-        <Login getUser={this.getUser} />
+        <div className="opening-page">
+          <div className="opening-box">
+            <div className="login-btn">
+              <span onClick={this.sign} className={this.state.signup? "selected":""}
+              >Sign Up</span>
+              <span onClick={this.log} className={this.state.signup? "":"selected"}
+              >Login</span>
+            </div>
+            <div>
+              {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
+            </div>
+          </div>
         </div>
       }
       </div>
