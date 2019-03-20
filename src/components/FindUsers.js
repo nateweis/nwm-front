@@ -69,16 +69,17 @@ class FindUsers extends Component {
           <span onClick={this.closeUsers} className="close-btn">
           Close
           </span>
+
           {this.state.users.info.map((user,index) => {
             return(
-              <span key={index}>
-                <p>{user.username}
+              <span className="add-frnd" key={index}>
+                <span>{user.username} </span>
                 <button onClick={()=>this.addToContacts(user)}
                 >Add to Contacts</button>
-                </p>
               </span>
             )
           })}
+
         </span>:""}
       </div>
     )
