@@ -254,6 +254,7 @@ class Messages extends Component {
     }
     this.removePersonFromChat(obj)
     this.props.rmChat("chats", this.props.chatIndex)
+    
   }
 
   // remove a person from current chats
