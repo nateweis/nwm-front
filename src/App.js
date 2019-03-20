@@ -162,8 +162,28 @@ class App extends Component {
   }
 
   fullArrUpdate = (arr, index, data) => {
-    this.removeOneMessage(arr, index)
-    this.addToArr(arr, data)
+    // this.removeOneMessage(arr, index)
+    // this.addToArr(arr, data)
+    this.setState((pre) => {
+      console.log(pre[arr][index]);
+      pre[arr][index] = data
+      return{[arr]:pre[arr]}
+    })
+  }
+
+  updateUserPic = (newPic) => {
+    this.setState((pre) => {
+      pre.currentUser.pic = newPic
+      for (let i = 0; i < pre.messages.length; i++) {
+        if(pre.currentUser.id === pre.messages[i].user_id){
+          pre.messages[i].pic = newPic
+        }
+      }
+      return{
+        currentUser:pre.currentUser,
+        messages:pre.messages
+      }
+    })
   }
 
 
@@ -192,7 +212,8 @@ class App extends Component {
         messages={this.state.messages} socket={this.newMessage}
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
         addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
-        removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
+        removeState={this.removeStateInfo} rmOne={this.removeOneMessage}
+        updatePic={this.updateUserPic}/>:
         <div className="opening-page">
           <div className="opening-box">
             <div className="login-btn">
