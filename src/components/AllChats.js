@@ -166,6 +166,7 @@ class AllChats extends Component {
           rmChat={this.removeOneMessage}
           chatIndex={this.state.chatIndex}
           editChat={this.fullArrUpdate}
+          leave={this.changeChat}
           socket={this.props.socket}/>
         </div>
 
