@@ -107,6 +107,7 @@ class AllChats extends Component {
 
           <Profile
           currentUser={this.props.currentUser}
+          updatePic={this.props.updatePic}
           />
 
           <NewChat
