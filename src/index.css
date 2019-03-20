@@ -3,6 +3,7 @@ html,body{
   padding: 0;
   height: 100%;
   width:100%;
+  font-family: 'Montserrat', sans-serif;
 }
 button, input[type="submit"]{
   cursor: pointer;
@@ -11,24 +12,22 @@ button, input[type="submit"]{
 /*====================== General algnment  ==========================*/
 /*===================================================================*/
 .all-chats{
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   height: 100vh;
-  background: linear-gradient(rgb(48,71,109),rgb(0, 17, 43));
+  background: linear-gradient(rgba(45,68,109,.9),rgba(1, 7, 30,.9)), url('side.jpeg');
 }
 .left-side,.center{
   height: 90vh;
 }
 
 .left-side{
-  border: 1px solid lightblue;
+  /* border: 1px solid lightblue; */
   width:25%;
-  height: 100%;
-
   color: #ddd;
 }
 
 .center{
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
   width: 75%;
   overflow: scroll;
   background: url('background.jpg') center no-repeat;
@@ -36,15 +35,17 @@ button, input[type="submit"]{
 }
 
 .top{
-  border: 1px solid lightgreen;
+  /* border: 1px solid lightgreen; */
   display: flex;
-  color: #ddd;
+  color: #eee;
 }
 .flex-container{
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
   display: flex;
-  /* background-color:#30476d; */
-  background: linear-gradient(rgb(48,71,109),rgb(0, 17, 43));
+  max-height: 100vh;
+  overflow: scroll;
+  /* background: linear-gradient(#30476d,rgb(5, 29, 66)); */
+
 }
 form{
   /* border: 1px solid black; */
@@ -67,12 +68,11 @@ form{
   margin-left: 3%;
 }
 .message-btn{
-  position:absolute;
-  right: 60%;
+  position:relative;
   display: none;
 }
 .message:hover .message-btn{
-  /* display: inline; */
+  display: inline;
 }
 .chat-screen{
   display: flex;
@@ -105,6 +105,7 @@ form{
 .msg{
   display: flex;
   justify-content: space-between;
+  min-width: 200px;
 }
 .msg .pointer{
   width: 0;
@@ -144,13 +145,20 @@ form{
 /*====================== Message Options  ===========================*/
 /*===================================================================*/
 .friend-que{
-  border: 2px solid gold;
   display: flex;
 
 }
+
 .addFriend,.addedFriend{
-  border: 1px solid orange;
+  border: 1px solid #eee;
   width:50%;
+}
+.addedFriend button{
+  display: block;
+  margin: 0 auto;
+}
+.addFriend span,.addedFriend span{
+  padding-left: 10px;
 }
 
 .options{
@@ -161,14 +169,51 @@ form{
 }
 .options-menu{
   background-color: rgba(0, 0, 0, 0.5);
-  width: 75%;
+  width: 30%;
+  max-height: 80%;
+  overflow-y:scroll;
+}
+.options button{
+  background: none;
+  border-radius: 15px;
+  color: #eee;
+  border: 2px solid rgb(0, 61, 160);
+  outline: none;
+  transition: 0.25s;
+}
+.options button:hover{
+  background: rgb(0, 61, 160);
+}
+.user-btn{
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+}
+.user-btn:first-child{
+  margin-top: 40px;
+}
+.options-menu li{
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 10px;
 }
 .options h4{
-  color: #032254;
+  color: #eee;
   text-align: center;
 }
 .option-btn{
   float: right;
+  clear: both;
+}
+.plus{
+  font-size: 20px;
+}
+.friend-que .plus, .friend-que .close-btn{
+  border: none;
+}
+.friend-que .plus:hover, .friend-que .close-btn:hover{
+  background: none;
+  color:rgb(0, 61, 160);
 }
 /*===================================================================*/
 /*====================== Top Banner/Nav?  ===========================*/
@@ -185,6 +230,12 @@ form{
 /*===================================================================*/
 /*============================= Side Nav  ===========================*/
 /*===================================================================*/
+hr{
+  width: 80%;
+}
+.welcome{
+  font-family: 'Cinzel', serif;
+}
 .active{
   border:1px solid lightgreen;
   color:pink;
@@ -213,12 +264,107 @@ form{
   overflow: scroll;
 }
 
-.find-user{
+/* .find-user{
   border: 1px solid green;
-}
+} */
 .close-btn{
   cursor: pointer;
+}
+/*===================================================================*/
+/*============================ Login/Sigup ==========================*/
+/*===================================================================*/
+.opening-box{
+  position: absolute;
+  top:30%;
+  left:50%;
+  background: rgba(25,25,25,.8);
+  text-align: center;
+  color: #eee;
+  transform: translate(-50%,-50%);
+}
+.login-btn{
+  display: flex;
+  margin-top: 0;
+  justify-content: space-around;
+  background: rgb(89, 105, 130);
 
+
+}
+.login-btn span{
+  padding: 5px;
+  width: 50%;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.selected{
+  background: rgba(25,25,25,.8);
+}
+.login-box{
+  padding: 40px;
+  width: 300px;
+}
+.login-box h2{
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+.login-box input[type="text"], .login-box input[type="password"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #eee;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: #eee;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.login-box input[type="text"]:focus, .login-box input[type="password"]:focus{
+  width: 280px;
+  border-color: #3498db;
+}
+.login-box input[type="submit"]{
+  border:0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 40px;
+  outline: none;
+  color: #eee;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.login-box input[type="submit"]:hover{
+  background-color: #3498db;
+}
+.opening-page{
+  width: 100vw;
+  height: 100vh;
+  background: rgb(89, 105, 130);
+}
+/*===================================================================*/
+/*=============================== Modual ============================*/
+/*===================================================================*/
+.modual{
+  width: 300px;
+  min-height: 100px;
+  padding: 30px;
+  position: fixed;
+  top:50%;
+  left:50%;
+  z-index: 3;
+  transform: translate(-50%,-50%);
+  background: rgb(89, 105, 130);
+  color:#eee;
+}
+.modual span{
+  margin-right: 30px;
+  cursor: pointer;
 }
 
 

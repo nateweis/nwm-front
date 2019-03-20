@@ -192,11 +192,18 @@ class App extends Component {
         logedin={this.toggleLogdin} currentUser={this.state.currentUser}
         addToArr={this.addToArr} fullArrUpdate={this.fullArrUpdate}
         removeState={this.removeStateInfo} rmOne={this.removeOneMessage}/>:
-        <div className="opening-box">
-
-          <span onClick={this.sign}>Sign Up</span><span onClick={this.log}>Login</span>
-          {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
-
+        <div className="opening-page">
+          <div className="opening-box">
+            <div className="login-btn">
+              <span onClick={this.sign} className={this.state.signup? "selected":""}
+              >Sign Up</span>
+              <span onClick={this.log} className={this.state.signup? "":"selected"}
+              >Login</span>
+            </div>
+            <div>
+              {this.state.signup? <SignUp />: <Login getUser={this.getUser} />}
+            </div>
+          </div>
         </div>
       }
       </div>
