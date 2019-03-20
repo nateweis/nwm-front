@@ -254,7 +254,9 @@ class Messages extends Component {
     }
     this.removePersonFromChat(obj)
     this.props.rmChat("chats", this.props.chatIndex)
-    
+    const tempRoom = {chat:"TempRoom", id:this.props.currentUser.id, chat_id:0}
+    this.props.leave(tempRoom)
+
   }
 
   // remove a person from current chats
