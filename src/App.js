@@ -162,8 +162,13 @@ class App extends Component {
   }
 
   fullArrUpdate = (arr, index, data) => {
-    this.removeOneMessage(arr, index)
-    this.addToArr(arr, data)
+    // this.removeOneMessage(arr, index)
+    // this.addToArr(arr, data)
+    this.setState((pre) => {
+      console.log(pre[arr][index]);
+      pre[arr][index] = data
+      return{[arr]:pre[arr]}
+    })
   }
 
   updateUserPic = (newPic) => {
