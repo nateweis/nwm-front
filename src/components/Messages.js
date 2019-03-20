@@ -55,6 +55,18 @@ class Messages extends Component {
 
   // Submits the list to the database
   handleSubmit = () => {
+    var inChat = false
+      for (let i = 0; i < this.state.friendName.length; i++) {
+        for (let j = 0; j < this.state.participants.length; j++) {
+          if(this.state.friendName[i] === this.state.participants.username){
+            inChat = true
+          }
+        }
+        if(!inChat){
+          this.addParticipantToState(this.state.friendName[i])
+        }
+      }
+
       const obj = {
         userArr: this.state.friendId,
         chat_id: this.state.chat.chat_id
@@ -213,6 +225,12 @@ class Messages extends Component {
         console.log("getting chatroom members has frontend problems");
       })
     })
+  }
+
+  // add participant to state
+  addParticipantToState = (name) => {
+    const obj = {username:name}
+    this.setState({participants:[obj,...this.state.participants]})
   }
 
   // kick guy out of chat

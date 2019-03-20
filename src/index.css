@@ -5,8 +5,28 @@ html,body{
   width:100%;
   font-family: 'Montserrat', sans-serif;
 }
+/*===================================================================*/
+/*====================== General Style  ==========================*/
+/*===================================================================*/
 button, input[type="submit"]{
   cursor: pointer;
+}
+.all-chats input[type="submit"]{
+  background: none;
+  color:white;
+  margin-left: 5px;
+  border-width: 2px;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.all-chats input[type="submit"]:hover{
+  background-color: #eee;
+  color: rgb(0, 61, 160);
+  /* font-weight: bold; */
+  outline: none;
+}
+form{
+  width: 250px;
 }
 /*===================================================================*/
 /*====================== General algnment  ==========================*/
@@ -24,6 +44,7 @@ button, input[type="submit"]{
   /* border: 1px solid lightblue; */
   width:25%;
   color: #ddd;
+  transition: 0.25s;
 }
 
 .center{
@@ -47,10 +68,7 @@ button, input[type="submit"]{
   /* background: linear-gradient(#30476d,rgb(5, 29, 66)); */
 
 }
-form{
-  /* border: 1px solid black; */
-  width: 198px;
-}
+
 /*===================================================================*/
 /*============================ Message Box ==========================*/
 /*===================================================================*/
@@ -66,6 +84,12 @@ form{
 .new-msg input[type="submit"]{
   display: inline-block;
   margin-left: 3%;
+  border: 2px solid rgb(0, 61, 160);
+  transition: 0.25s;
+}
+.new-msg input[type="submit"]:hover{
+  background-color: rgb(0, 61, 160);
+  color: #eee;
 }
 .message-btn{
   position:relative;
@@ -237,7 +261,7 @@ hr{
   font-family: 'Cinzel', serif;
 }
 .active{
-  border:1px solid lightgreen;
+  background: rgba(200,200,200,.3);
   color:pink;
 }
 .left-side h3{
@@ -250,23 +274,40 @@ hr{
 .pm,.chat-room-msg{
   padding-bottom: 10px;
   display: block;
+  transition: 0.25s;
 }
 .pm:hover,.chat-room-msg:hover{
-  border: 1px solid green;
+  /* border: 1px solid green; */
   color:pink;
+  cursor: pointer;
 }
 
 /*===================================================================*/
 /*========================= Side Nav Find user ======================*/
 /*===================================================================*/
-.find-user,.pm-box,.chat-room{
-  max-height: 25%;
+.pm-box,.chat-room{
+  max-height: 40%;
   overflow: scroll;
 }
-
-/* .find-user{
-  border: 1px solid green;
-} */
+.find-user .close-btn:hover{
+  color:pink;
+}
+.add-frnd{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+.add-frnd button{
+  color: #eee;
+  background: none;
+  border-radius: 24px;
+  border-width: 2px;
+  transition: 0.25s;
+}
+.add-frnd button:hover{
+  background: #eee;
+  color: rgb(0, 61, 160);
+}
 .close-btn{
   cursor: pointer;
 }
@@ -366,6 +407,8 @@ hr{
   margin-right: 30px;
   cursor: pointer;
 }
+
+
 
 
 
